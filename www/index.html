@@ -43,14 +43,22 @@
 </head>
 
 <body>
+    <img id="myImage"/>
     <div class="app">
-        <h1>PhoneGap</h1>
-        <div id="deviceready" class="blink" onclick='cam();'>
+        <h1 onclick='not();'>PhoneGap</h1>
+        <div id="deviceready" class="blink">
             <p class="event listening">Connecting to Device</p>
             <p class="event received">Device is Ready</p>
+
         </div>
+        <a style='position:relative;top:40px;border:1px #f00 solid;padding:10px 20px;' href="#" onclick='cam();'>Camera</a>
+        <a style='position:relative;top:40px;border:1px #f00 solid;padding:10px 20px;' href="#" onclick='checkConnection();'>Conection</a>
+        <a style='position:relative;top:65px;border:1px #f00 solid;padding:10px 20px;' href="#" onclick='br()'>Browser</a>
+        <a style='position:relative;top:65px;border:1px #f00 solid;padding:10px 20px;' href="#" onclick='ajaxq()'>Ajax</a>
+        <div id='output'></div>
     </div>
     <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
         app.initialize();
@@ -67,6 +75,43 @@
                 alert('Failed because: ' + message);
             }
         }
+        function not(){ 
+            function alertDismissed() {
+            // do something
+            }
+            navigator.notification.alert(
+            'You are the winner!',  // message
+            alertDismissed,         // callback
+            'Game Over',            // title
+            'Done');
+        }
+        function checkConnection() {
+            var networkState = navigator.connection.type;
+
+            var states = {};
+            states[Connection.UNKNOWN]  = 'Unknown connection';
+            states[Connection.ETHERNET] = 'Ethernet connection';
+            states[Connection.WIFI]     = 'WiFi connection';
+            states[Connection.CELL_2G]  = 'Cell 2G connection';
+            states[Connection.CELL_3G]  = 'Cell 3G connection';
+            states[Connection.CELL_4G]  = 'Cell 4G connection';
+            states[Connection.CELL]     = 'Cell generic connection';
+            states[Connection.NONE]     = 'No network connection';
+
+            alert('Connection type: ' + states[networkState]);
+        }
+        function br(){
+            var ref = cordova.InAppBrowser.open('http://apache.org', '_blank', 'location=yes');
+            window.open = cordova.InAppBrowser.open;
+        }
+        function ajaxq(){
+            $.getJSON("http://phonegappro.esy.es/test/json.php",function(result){
+              $.each(result, function(i, field){
+                $("#output").append("Title: "+ field.title + " duration: "+field.duration +" Price:"+field.price+"<br/>");
+             });
+            });
+        }
+
     </script>
 </body>
 
