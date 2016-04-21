@@ -45,17 +45,42 @@
 <body>
     <img id="myImage"/>
     <div class="app">
-        <h1 onclick='not();'>PhoneGap</h1>
         <div id="deviceready" class="blink">
             <p class="event listening">Connecting to Device</p>
-            <p class="event received">Device is Ready</p>
-
+            
+        
+            <div  class="event received">
+            <p class='event ' style='background-color:#4B946A;'>Device is Ready</p>
+            <h1 onclick='not();'>PhoneGap</h1>
+            
+            
+            <ul id="tab-bar">
+                <li>
+                    <a href="#map" class="active">Map</a>
+                </li>
+                <li>
+                    <a href="#camera">Camera</a>
+                </li>
+                <li>
+                    <a href="#twitter">Twitter</a>
+                </li>
+            </ul><div style='clear:both;'></div>
+            <div id="pages">
+                <div id="map" class="current">
+                    
+                    <a style='position:relative;border:1px #f00 solid;padding:10px 20px;' href="#" onclick='checkConnection();'>Conection</a>
+                    <a style='position:relative;border:1px #f00 solid;padding:10px 20px;' href="#" onclick='br()'>Browser</a>
+                    <a style='position:relative;border:1px #f00 solid;padding:10px 20px;' href="#" onclick='ajaxq()'>Ajax</a>
+                    <div  style='position:relative;top:25px;border:1px #f00 solid;padding:10px 20px;' id='output'></div>
+                </div>
+                <div id="camera">
+                    <a style='position:relative;border:1px #f00 solid;padding:10px 20px;' href="#" onclick='cam();'>Camera</a>
+                </div>
+                <div id="twitter">
+                </div>
+            </div>
+            </div>
         </div>
-        <a style='position:relative;top:40px;border:1px #f00 solid;padding:10px 20px;' href="#" onclick='cam();'>Camera</a>
-        <a style='position:relative;top:40px;border:1px #f00 solid;padding:10px 20px;' href="#" onclick='checkConnection();'>Conection</a>
-        <a style='position:relative;top:65px;border:1px #f00 solid;padding:10px 20px;' href="#" onclick='br()'>Browser</a>
-        <a style='position:relative;top:65px;border:1px #f00 solid;padding:10px 20px;' href="#" onclick='ajaxq()'>Ajax</a>
-        <div id='output'></div>
     </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
@@ -105,12 +130,29 @@
             window.open = cordova.InAppBrowser.open;
         }
         function ajaxq(){
-            $.getJSON("http://phonegappro.esy.es/test/json.php",function(result){
-              $.each(result, function(i, field){
-                $("#output").append("Title: "+ field.title + " duration: "+field.duration +" Price:"+field.price+"<br/>");
+            $.ajax({
+             type: "GET",
+             url: "http://phonegappro.esy.es/test/json.php",
+             crossDomain: true,
+             cache: false,
+             success: function(result){
+             var result=$.parseJSON(result);
+             $.each(result, function(i, field){
+             $("#output").append("Title: "+ field.title + " duration: "+field.duration +" Price:"+field.price+"<br/>");
              });
-            });
+             }
+             });
         }
+        $('#tab-bar a').on('click', function(e){
+            e.preventDefault();
+            var nextPage = $(e.target.hash);
+            $('#tab-bar a').removeClass("active");
+            $(this).addClass("active");
+            $("#pages .current").removeClass("current");
+            nextPage.addClass("current");
+            console.log("console.log works well");
+        });
+
 
     </script>
 </body>
