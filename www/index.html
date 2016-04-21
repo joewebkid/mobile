@@ -45,7 +45,7 @@
 <body>
     <div class="app">
         <h1>PhoneGap</h1>
-        <div id="deviceready" class="blink">
+        <div id="deviceready" class="blink" onclick='cam();'>
             <p class="event listening">Connecting to Device</p>
             <p class="event received">Device is Ready</p>
         </div>
@@ -54,6 +54,19 @@
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
         app.initialize();
+        function cam(){
+            navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+                destinationType: Camera.DestinationType.FILE_URI });
+
+            function onSuccess(imageURI) {
+                var image = document.getElementById('myImage');
+                image.src = imageURI;
+            }
+
+            function onFail(message) {
+                alert('Failed because: ' + message);
+            }
+        }
     </script>
 </body>
 
