@@ -1,7 +1,10 @@
 <ion-view title="Install Page" id="page2">
     <ion-content padding="true" class="has-header">
         <h1 id="cameraTabDefaultPage-heading1" style="color:#000000;">Новости</h1>
-         
+          <ion-refresher
+            pulling-text="Pull to refresh..."
+            on-refresh="doRefresh()">
+          </ion-refresher>
         <div style="position:relative;padding-bottom:56.25%;height:0;">
         <pre id="default-spacing">data.json
         <sub>(новости на сервере)</sub><br>{{ news | json }}</pre>

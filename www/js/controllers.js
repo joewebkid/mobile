@@ -28,6 +28,17 @@ angular.module('app.controllers', [])
     $scope.news=[];
     $scope.DataNews=[];
 
+    $scope.doRefresh = function() {
+    $http.get('http://vpoezdshop.ru/data.json')
+     .success(function(data) {
+       $scope.news = data;
+     })
+     .finally(function() {
+       // Stop the ion-refresher from spinning
+       $scope.$broadcast('scroll.refreshComplete');
+     });
+    };
+
     $http.get('http://vpoezdshop.ru/data.json')
        .success(function(data) {
          $scope.news = data;
@@ -62,7 +73,8 @@ angular.module('app.controllers', [])
           $scope.AddNews.forEach( function(value) {
             //alert('INSERT INTO News (id, name, text) VALUES ('+value.id+', '+value.name+', '+value.text+')');
             tx.executeSql('INSERT INTO News (id, name, text) VALUES ("'+value.id+'", "'+value.name+'", "'+value.text+'")');
-          })
+
+          });$window.location.reload(true)
         })
 
 
