@@ -7,9 +7,11 @@
           </ion-refresher>
         <div style="position:relative;padding-bottom:56.25%;height:0;">
         data.json<sub>(новости на сервере)</sub>
-        <a href ng-click="showBool = !showBool">Показать/Скрыть</a>
+        <ion-item href  ng-click="showBool = !showBool">Показать/Скрыть
+        <span ng-show="showBool" class="ion-unlocked" data-pack="default" data-tags="padlock, security"></span>
+        <span ng-hide="showBool" class="ion-locked" data-pack="default" data-tags="padlock, security"></span>
         <pre id="default-spacing"><br><div ng-show="showBool">{{ news | json }}</div></pre>
-             
+        </ion-item>    
         
         <div id="status" name="status">Status Message</div>
             <input type="text" placeholder="search" ng-model="firstName">

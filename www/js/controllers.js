@@ -32,6 +32,7 @@ angular.module('app.controllers', [])
     $http.get('http://vpoezdshop.ru/data.json')
      .success(function(data) {
        $scope.news = data;
+       $ionicHistory.clearCache();
      })
      .finally(function() {
        // Stop the ion-refresher from spinning
@@ -75,17 +76,19 @@ angular.module('app.controllers', [])
             tx.executeSql('INSERT INTO News (id, name, text) VALUES ("'+value.id+'", "'+value.name+'", "'+value.text+'")');
 
           });
+          $ionicHistory.clearCache();
         })
 
 
          db.transaction(function (tx) {
             tx.executeSql('SELECT * FROM News', [], function (tx, results) {
                var len = results.rows.length, i;
-               msg = "<p>Создано строк: " + len + "</p>";$window.location.reload(true);
+               msg = "<p>Создано строк: " + len + "</p>";
                document.querySelector('#status').innerHTML +=  msg;
                for (i = 0; i < len; i++){
                   $scope.DataNews[i]=results.rows.item(i);
                }
+               $ionicHistory.clearCache();
             }, null);
          });
         /* 
