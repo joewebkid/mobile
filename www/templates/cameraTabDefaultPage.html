@@ -8,9 +8,10 @@
              
         
         <div id="status" name="status">Status Message</div>
-        
-            <div ng-repeat="var in DataNews"> 
-                {{ var.id }}{{ var.name }}<br>{{ var.text }}
+            <input type="text" placeholder="search" ng-model="firstName">
+            <div ng-repeat="var in DataNews |  filter:firstName">
+                <b>{{ var.id }}) {{ var.name }}</b><br>
+                <div style='padding-left: 20px;'>{{ var.text }}</div>
             </div> 
         </div>
     </ion-content>
