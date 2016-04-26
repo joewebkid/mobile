@@ -40,7 +40,7 @@ angular.module('app.controllers', [])
      });
     };
 
-    $http.get('http://m-infogroup.visualteam.ru/data.php')
+    $http.get('http://vpoezdshop.ru/data.json')
        .success(function(data) {
          $scope.news = data;
 
