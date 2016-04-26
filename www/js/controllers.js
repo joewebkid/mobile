@@ -47,9 +47,9 @@ angular.module('app.controllers', [])
               })
             });
           });
-         $scope.AddNews.forEach( function(value) {
-          db.transaction(function (tx) {
-          
+         
+        db.transaction(function (tx) {
+          $scope.AddNews.forEach( function(value) {
             //alert('INSERT INTO News (id, name, text) VALUES ('+value.id+', '+value.name+', '+value.text+')');
             tx.executeSql('INSERT INTO News (id, name, text) VALUES ("'+value.id+'", "'+value.name+'", "'+value.text+'")');
           })
