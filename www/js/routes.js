@@ -15,7 +15,7 @@ angular.module('app.routes', [])
     views: {
       'tab4': {
         templateUrl: 'templates/cameraTabDefaultPage.html',
-        controller: 'cameraTabDefaultPageCtrl'
+        controller: 'PhoneListCtrl'
       }
     }
   })
