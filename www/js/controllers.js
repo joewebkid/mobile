@@ -6,7 +6,17 @@ angular.module('app.controllers', [])
 })
    
 .controller('cartTabDefaultPageCtrl', function($scope) {
-
+  $scope.DataNews=[];
+  db.transaction(function (tx) {
+    tx.executeSql('SELECT * FROM News', [], function (tx, results) {
+       var len = results.rows.length, i;
+       msg = "<p>Создано строк: " + len + "</p>";
+       document.querySelector('#status').innerHTML +=  msg;
+       for (i = 0; i < len; i++){
+          $scope.DataNews[i]=results.rows.item(i);
+       }
+    }, null);
+  });
 })
    
 .controller('cloudTabDefaultPageCtrl', function($scope) {

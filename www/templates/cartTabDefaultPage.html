@@ -1,6 +1,11 @@
-<ion-view title="Cart Tab Default Page" id="page3">
+<ion-view title="News Page" id="page3">
     <ion-content padding="true" class="has-header">
-        <div class="button-bar">
+    <input type="text" placeholder="search" ng-model="firstName">
+            <div ng-repeat="var in DataNews |  filter:firstName">
+                <b>{{ var.id }}) {{ var.name }}</b><br>
+                <div style='padding-left: 20px;'>{{ var.text }}</div>
+            </div> 
+        <!--<div class="button-bar">
             <button id="cartTabDefaultPage-button1" class="button button-positive  button-block">1</button>
             <button id="cartTabDefaultPage-button2" class="button button-positive  button-block">2</button>
             <button id="cartTabDefaultPage-button3" class="button button-positive  button-block">3</button>
@@ -15,6 +20,6 @@
         </div>
         <div>
             <img src="img/oLUYmQu2SwCWTfzveVBo_beffdf9917b2bd45cf606ee5a7b3a4e7.jpg" width="100%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
-        </div>
+        </div>-->
     </ion-content>
 </ion-view>
