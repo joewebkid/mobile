@@ -1,0 +1,18 @@
+<ion-view title="Camera Tab Default Page" id="page2">
+    <ion-content padding="true" class="has-header">
+        <h1 id="cameraTabDefaultPage-heading1" style="color:#000000;">Новости</h1>
+         
+        <div style="position:relative;padding-bottom:56.25%;height:0;">
+        <pre id="default-spacing">data.json
+        <sub>(новости на сервере)</sub><br>{{ news | json }}</pre>
+             
+        
+        <div id="status" name="status">Status Message</div>
+            <input type="text" placeholder="search" ng-model="firstName">
+            <div ng-repeat="var in DataNews |  filter:firstName">
+                <b>{{ var.id }}) {{ var.name }}</b><br>
+                <div style='padding-left: 20px;'>{{ var.text }}</div>
+            </div> 
+        </div>
+    </ion-content>
+</ion-view>
