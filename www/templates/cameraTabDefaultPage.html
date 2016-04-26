@@ -14,7 +14,11 @@
         </ion-item>    
         
         <div id="status" name="status">Status Message</div>
-            <input type="text" placeholder="search" ng-model="firstName">
+
+            <label class="item item-input">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input type="search" placeholder="search" ng-model="firstName">
+            </label>
             <ion-list>
               <ion-item ng-repeat="var in DataNews |  filter:firstName">
                 <b>{{ var.id }}) {{ var.name }}</b><br>
