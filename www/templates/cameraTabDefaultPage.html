@@ -6,16 +6,19 @@
             on-refresh="doRefresh()">
           </ion-refresher>
         <div style="position:relative;padding-bottom:56.25%;height:0;">
-        <pre id="default-spacing">data.json
-        <sub>(новости на сервере)</sub><br>{{ news | json }}</pre>
+        data.json<sub>(новости на сервере)</sub>
+        <a href ng-click="showBool = !showBool">Показать/Скрыть</a>
+        <pre id="default-spacing"><br><div ng-show="showBool">{{ news | json }}</div></pre>
              
         
         <div id="status" name="status">Status Message</div>
             <input type="text" placeholder="search" ng-model="firstName">
-            <div ng-repeat="var in DataNews |  filter:firstName">
+            <ion-list>
+              <ion-item ng-repeat="var in DataNews |  filter:firstName">
                 <b>{{ var.id }}) {{ var.name }}</b><br>
                 <div style='padding-left: 20px;'>{{ var.text }}</div>
-            </div> 
+              </ion-item>
+            </ion-list>
         </div>
     </ion-content>
 </ion-view>
