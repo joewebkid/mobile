@@ -33,7 +33,7 @@ angular.module('app.controllers', [])
          $scope.news = data;
 
        }).error(function() {
-         alert('NO');})
+         alert('no internet conection');})
 
         var db = openDatabase('mydb', '1.0', 'Test DB',  32* 1024 * 1024);
          var msg;
