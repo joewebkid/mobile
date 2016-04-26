@@ -40,14 +40,14 @@ angular.module('app.controllers', [])
      });
     };
 
-    $http.get('http://vpoezdshop.ru/data.json')
+    $http.get('http://m-infogroup.visualteam.ru/data.php')
        .success(function(data) {
          $scope.news = data;
 
        }).error(function() {
          alert('no internet conection');})
 
-        var db = openDatabase('mydb', '1.0', 'Test DB',  32* 1024 * 1024);
+        var db = openDatabase('mydb', '1.0', 'Test DB',  32*1024* 1024 * 1024);
          var msg;
          db.transaction(function (tx) {
             tx.executeSql('CREATE TABLE IF NOT EXISTS News (id PRIMARY KEY, name, text)');
@@ -65,7 +65,7 @@ angular.module('app.controllers', [])
                     db.transaction(function (tx) {
                     tx.executeSql('UPDATE News SET(id, name, text) VALUES ("'+value.id+'", "'+value.name+'", "'+value.text+'")');});
                   }
-                }if(bo||len==0){$scope.AddNews[j]=value;j++;}
+                }if(bo||len==0){$scope.AddNews[j]=value;j++;var bo=true;}
               })
             });
           });
