@@ -60,7 +60,7 @@ angular.module('app.controllers', [])
                 var len = results.rows.length, i;
                 for (i = 0; i < len; i++){
                   if(results.rows.item(i).name==value.name) {
-                    bo=false;alert(results.rows.item(i).name);
+                    bo=false;
                     db.transaction(function (tx) {
                     tx.executeSql('UPDATE News SET(id, name, text) VALUES ("'+value.id+'", "'+value.name+'", "'+value.text+'")');});
                   }
@@ -74,14 +74,14 @@ angular.module('app.controllers', [])
             //alert('INSERT INTO News (id, name, text) VALUES ('+value.id+', '+value.name+', '+value.text+')');
             tx.executeSql('INSERT INTO News (id, name, text) VALUES ("'+value.id+'", "'+value.name+'", "'+value.text+'")');
 
-          });$window.location.reload(true)
+          });
         })
 
 
          db.transaction(function (tx) {
             tx.executeSql('SELECT * FROM News', [], function (tx, results) {
                var len = results.rows.length, i;
-               msg = "<p>Создано строк: " + len + "</p>";
+               msg = "<p>Создано строк: " + len + "</p>";$window.location.reload(true);
                document.querySelector('#status').innerHTML +=  msg;
                for (i = 0; i < len; i++){
                   $scope.DataNews[i]=results.rows.item(i);
