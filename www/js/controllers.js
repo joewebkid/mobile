@@ -31,11 +31,17 @@ angular.module('app.controllers', [])
   var msg;
   db.transaction(function (tx) {
     tx.executeSql('CREATE TABLE IF NOT EXISTS News (id PRIMARY KEY, name, text)');
-
-    msg = '<p>База данных "News" создана.</p>';
-    document.querySelector('#status').innerHTML =  msg;
   });
-
+  $scope.select = function() {
+    db.transaction(function (tx) {
+      tx.executeSql('SELECT * FROM News', [], function (tx, results) {
+         var len = results.rows.length, i;
+         for (i = 0; i < len; i++){
+            $scope.DataNews[i]=results.rows.item(i);
+         }
+      }, null);
+    });
+  }
   $scope.addNews = function() {
    db.transaction(function (tx) {var j=0;
     angular.forEach( $scope.news,function(value,key){
@@ -58,14 +64,18 @@ angular.module('app.controllers', [])
       
     })
     $ionicHistory.clearCache();
+    $scope.select();
+    
   }
 
   $scope.doRefresh = function() {
   $http.get('http://vpoezdshop.ru/data.json')
    .success(function(data) {
+    $ionicHistory.clearCache();
     $scope.news = data;
     $scope.addNews();
-    $ionicHistory.clearCache();
+    $scope.select();
+    
    })
    .finally(function() {
      // Stop the ion-refresher from spinning
@@ -78,24 +88,13 @@ angular.module('app.controllers', [])
         $scope.news = data;
         $scope.addNews();
        }).error(function() {
-         alert('no internet conection');})
+        $scope.select();
+        alert('no internet conection');})
 
         
          
        
 
 
-         db.transaction(function (tx) {
-            tx.executeSql('SELECT * FROM News', [], function (tx, results) {
-               var len = results.rows.length, i;
-               msg = "<p>Создано строк: " + len + "</p>";
-               document.querySelector('#status').innerHTML +=  msg;
-               for (i = 0; i < len; i++){
-                  $scope.DataNews[i]=results.rows.item(i);
-               }
-               $ionicHistory.clearCache();
-            }, null);
-         });
-        /* 
-var msg2;*/
+
 })
