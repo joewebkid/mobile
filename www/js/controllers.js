@@ -71,12 +71,14 @@ angular.module('app.controllers', [])
   $scope.doRefresh = function() {
   $http.get('http://vpoezdshop.ru/data.json')
    .success(function(data) {
-    $ionicHistory.clearCache();
     $scope.news = data;
     $scope.addNews();
-    $scope.select();
-    
+    $ionicHistory.clearCache();
+    $scope.DataNews = data;
    })
+   .error(function() {
+        $scope.select();
+        alert('no internet conection');})
    .finally(function() {
      // Stop the ion-refresher from spinning
      $scope.$broadcast('scroll.refreshComplete');
@@ -87,6 +89,7 @@ angular.module('app.controllers', [])
        .success(function(data) {
         $scope.news = data;
         $scope.addNews();
+        $scope.DataNews = data;
        }).error(function() {
         $scope.select();
         alert('no internet conection');})
