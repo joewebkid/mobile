@@ -4,7 +4,11 @@ angular.module('app.controllers', [])
 
 
 })
-   
+ .controller('NewsCtrl', function($scope, $routeParams) {alert(1);
+ // $scope.var.name='Ваня';
+  //$scope.newsId = $routeParams.newsId;
+  //var db = openDatabase('mydb', '1.0', 'Test DB',  32* 1024 * 1024);
+})  
 .controller('cartTabDefaultPageCtrl', function($scope) {
   var db = openDatabase('mydb', '1.0', 'Test DB',  32* 1024 * 1024);
   $scope.DataNews=[];
