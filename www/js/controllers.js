@@ -87,7 +87,6 @@ angular.module('app.controllers', [])
     });
   }
   $scope.doRefresh = function() {
-<<<<<<< HEAD
   $http.get('http://vpoezdshop.ru/data.json')
    .success(function(data) {
     $scope.news = data;
@@ -112,7 +111,6 @@ angular.module('app.controllers', [])
        }).error(function() {
         $scope.select();
         alert('no internet conection');})
-=======
 
     $http.get('http://vpoezdshop.ru/data.json')
     .success(function(data) {
@@ -129,7 +127,6 @@ angular.module('app.controllers', [])
       // Stop the ion-refresher from spinning
       $scope.$broadcast('scroll.refreshComplete');
     })
->>>>>>> abfbc45a3418c7124cc3be5c9b57a372de0057e9
 
   }
   
