@@ -13,13 +13,17 @@
         <pre id="default-spacing" lang="json">data.json<sub>(новости на сервере)</sub><br><div ng-show="showBool">{{ news | json }}</div></pre>
         </ion-item>    
         
-            <ion-list>
-                <ion-item class="item item-icon-left" href="#">
+           
+                <a  ng-click="showBool2 = !showBool2" class="item item-icon-left">
                     <i class="icon ion-social-freebsd-devil"></i>
-                    Все новости 
+                    Все новости в базе  (Показать/Скрыть)
+                    <span ng-show="showBool2" class="ion-unlocked" data-pack="default" data-tags="padlock, security">
+                    </span>
+                    <span ng-hide="showBool2" class="ion-locked" data-pack="default" data-tags="padlock, security">
+                    </span>
                     <span class="badge badge-assertive"> <span ng-bind="DataNews.length"></span></span>
-                </ion-item>
-
+                </a>
+            <ion-list  ng-show="showBool2">
                 <label class="item item-input">
                     <i class="icon ion-search placeholder-icon"></i>
                     <input type="search" placeholder="search" ng-model="firstName">

@@ -4,19 +4,25 @@ angular.module('app.controllers', [])
 
 
 })
-   
+ .controller('NewsCtrl', function($scope, $routeParams) {alert(1);
+ // $scope.var.name='Ваня';
+  //$scope.newsId = $routeParams.newsId;
+  //var db = openDatabase('mydb', '1.0', 'Test DB',  32* 1024 * 1024);
+})  
 .controller('cartTabDefaultPageCtrl', function($scope) {
+  var db = openDatabase('mydb', '1.0', 'Test DB',  32* 1024 * 1024);
   $scope.DataNews=[];
-  db.transaction(function (tx) {
-    tx.executeSql('SELECT * FROM News', [], function (tx, results) {
-       var len = results.rows.length, i;
-       msg = "<p>Создано строк: " + len + "</p>";
-       document.querySelector('#status').innerHTML +=  msg;
-       for (i = 0; i < len; i++){
-          $scope.DataNews[i]=results.rows.item(i);
-       }
-    }, null);
-  });
+  $scope.select = function() {
+    db.transaction(function (tx) {
+      tx.executeSql('SELECT * FROM News', [], function (tx, results) {
+         var len = results.rows.length, i;
+         for (i = 0; i < len; i++){
+            $scope.DataNews[i]=results.rows.item(i);
+         }
+      }, null);
+    });
+  }
+  $scope.select();
 })
    
 .controller('cloudTabDefaultPageCtrl', function($scope) {
@@ -67,8 +73,21 @@ angular.module('app.controllers', [])
     $scope.select();
     
   }
-
+  $scope.selectFromDb = function() {
+    db.transaction(function (tx) {
+      tx.executeSql('SELECT * FROM News', [], function (tx, results) {
+         var len = results.rows.length, i;
+         msg = "<p>Создано строк: " + len + "</p>";
+         document.querySelector('#status').innerHTML +=  msg;
+         for (i = 0; i < len; i++){
+            $scope.DataNews[i]=results.rows.item(i);
+         }
+         $ionicHistory.clearCache();
+      }, null);
+    });
+  }
   $scope.doRefresh = function() {
+<<<<<<< HEAD
   $http.get('http://vpoezdshop.ru/data.json')
    .success(function(data) {
     $scope.news = data;
@@ -93,11 +112,37 @@ angular.module('app.controllers', [])
        }).error(function() {
         $scope.select();
         alert('no internet conection');})
+=======
 
-        
-         
-       
+    $http.get('http://vpoezdshop.ru/data.json')
+    .success(function(data) {
+      $scope.news = data;
+      //$scope.DataNews = data;
+      $scope.addNews();
+      $scope.select();  
+    })
+    .error(function() {
+      $scope.selectFromDb();
+      alert('no internet conection');
+    })
+    .finally(function() {
+      // Stop the ion-refresher from spinning
+      $scope.$broadcast('scroll.refreshComplete');
+    })
+>>>>>>> abfbc45a3418c7124cc3be5c9b57a372de0057e9
 
+  }
+  
+
+    $http.get('http://vpoezdshop.ru/data.json')
+    .success(function(data) {
+    $scope.news = data;
+    $scope.addNews();
+    $scope.select();
+    })
+    .error(function() {
+    $scope.select();
+    alert('no internet conection');})
 
 
 })

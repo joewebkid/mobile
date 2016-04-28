@@ -8,7 +8,13 @@ angular.module('app.routes', [])
   // Each state's controller can be found in controllers.js
   $stateProvider
     
-  
+    .state('newsPage', {
+      url: '/news/:newsId',
+      templateUrl:'templates/newsPage.html',
+      controller:  function() {
+        
+      }
+    })
 
       .state('tabsController.cameraTabDefaultPage', {
     url: '/page2',
@@ -46,7 +52,7 @@ angular.module('app.routes', [])
     abstract:true
   })
 
-$urlRouterProvider.otherwise('/page1/page2')
+  
 
   
 

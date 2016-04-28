@@ -12,10 +12,12 @@
                     <input type="search" placeholder="search" ng-model="firstName">
                 </label>
                 <div ng-repeat="var in DataNews |  filter:firstName">
-                    <div class="item item-divider"><b>{{ var.id }}) {{ var.name }}</b></div>
+                <a ui-sref="newsPage({ newsId:var.id })">
+                    <div class="item item-divider"><b> {{ var.name }}</b></div>
                     <ion-item>
                     <div style='padding-left: 20px;'>{{ var.text }}</div>
                     </ion-item>
+                </a>
                 </div>
             </ion-list>
         <!--<div class="button-bar">
