@@ -5,25 +5,35 @@
             pulling-text="Pull to refresh..."
             on-refresh="doRefresh()">
           </ion-refresher>
-        <div style="position:relative;padding-bottom:56.25%;height:0;">
-        data.json<sub>(новости на сервере)</sub>
-        <ion-item href  ng-click="showBool = !showBool">Показать/Скрыть
+        <div  style="position:relative;padding-bottom:56.25%;height:0;">
+        
+        <ion-item ng-click="showBool = !showBool">Показать/Скрыть
         <span ng-show="showBool" class="ion-unlocked" data-pack="default" data-tags="padlock, security"></span>
         <span ng-hide="showBool" class="ion-locked" data-pack="default" data-tags="padlock, security"></span>
-        <pre id="default-spacing"><br><div ng-show="showBool">{{ news | json }}</div></pre>
+        <pre id="default-spacing" lang="json">data.json<sub>(новости на сервере)</sub><br><div ng-show="showBool">{{ news | json }}</div></pre>
         </ion-item>    
         
-        <div id="status" name="status">Status Message</div>
-
-            <label class="item item-input">
-                <i class="icon ion-search placeholder-icon"></i>
-                <input type="search" placeholder="search" ng-model="firstName">
-            </label>
-            <ion-list>
-              <ion-item ng-repeat="var in DataNews |  filter:firstName">
-                <label><b>{{ var.id }}) {{ var.name }}</b></label>
-                <div style='padding-left: 20px;'>{{ var.text }}</div>
-              </ion-item>
+           
+                <a  ng-click="showBool2 = !showBool2" class="item item-icon-left">
+                    <i class="icon ion-social-freebsd-devil"></i>
+                    Все новости в базе  (Показать/Скрыть)
+                    <span ng-show="showBool2" class="ion-unlocked" data-pack="default" data-tags="padlock, security">
+                    </span>
+                    <span ng-hide="showBool2" class="ion-locked" data-pack="default" data-tags="padlock, security">
+                    </span>
+                    <span class="badge badge-assertive"> <span ng-bind="DataNews.length"></span></span>
+                </a>
+            <ion-list  ng-show="showBool2">
+                <label class="item item-input">
+                    <i class="icon ion-search placeholder-icon"></i>
+                    <input type="search" placeholder="search" ng-model="firstName">
+                </label>
+                <div ng-repeat="var in DataNews |  filter:firstName">
+                    <div class="item item-divider"><b>{{ var.id }}) {{ var.name }}</b></div>
+                    <ion-item>
+                    <div style='padding-left: 20px;'>{{ var.text }}</div>
+                    </ion-item>
+                </div>
             </ion-list>
         </div>
     </ion-content>
