@@ -59,43 +59,44 @@ angular.module('app.controllers', [])
     })
     $ionicHistory.clearCache();
   }
-
+  $scope.selectFromDb = function() {
+    db.transaction(function (tx) {
+      tx.executeSql('SELECT * FROM News', [], function (tx, results) {
+         var len = results.rows.length, i;
+         msg = "<p>Создано строк: " + len + "</p>";
+         document.querySelector('#status').innerHTML +=  msg;
+         for (i = 0; i < len; i++){
+            $scope.DataNews[i]=results.rows.item(i);
+         }
+         $ionicHistory.clearCache();
+      }, null);
+    });
+  }
   $scope.doRefresh = function() {
-  $http.get('http://vpoezdshop.ru/data.json')
-   .success(function(data) {
-    $scope.news = data;
-    $scope.addNews();
-    $ionicHistory.clearCache();
-   })
-   .finally(function() {
-     // Stop the ion-refresher from spinning
-     $scope.$broadcast('scroll.refreshComplete');
-   });
-  };
-
     $http.get('http://vpoezdshop.ru/data.json')
-       .success(function(data) {
-        $scope.news = data;
-        $scope.addNews();
-       }).error(function() {
-         alert('no internet conection');})
+    .success(function(data) {
+      $scope.news = data;
+      $scope.DataNews = data;
+      $scope.addNews();  
+    })
+    .error(function() {
+      $scope.selectFromDb();
+      alert('no internet conection');
+    })
+    .finally(function() {
+      // Stop the ion-refresher from spinning
+      $scope.$broadcast('scroll.refreshComplete');
+    })
+
+  }
+  $scope.doRefresh();
+  
 
         
          
        
 
 
-         db.transaction(function (tx) {
-            tx.executeSql('SELECT * FROM News', [], function (tx, results) {
-               var len = results.rows.length, i;
-               msg = "<p>Создано строк: " + len + "</p>";
-               document.querySelector('#status').innerHTML +=  msg;
-               for (i = 0; i < len; i++){
-                  $scope.DataNews[i]=results.rows.item(i);
-               }
-               $ionicHistory.clearCache();
-            }, null);
-         });
-        /* 
-var msg2;*/
+         
+
 })

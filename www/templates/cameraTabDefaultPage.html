@@ -21,7 +21,7 @@
             </label>
             <ion-list>
               <ion-item ng-repeat="var in DataNews |  filter:firstName">
-                <b>{{ var.id }}) {{ var.name }}</b><br>
+                <label><b>{{ var.id }}) {{ var.name }}</b></label>
                 <div style='padding-left: 20px;'>{{ var.text }}</div>
               </ion-item>
             </ion-list>
