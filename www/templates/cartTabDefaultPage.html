@@ -1,10 +1,10 @@
-<ion-view title="News Page" id="page3">
+<ion-view title="Все новости" id="page3">
     <ion-content padding="true" class="has-header">
             <ion-list>
                 <ion-item class="item item-icon-left" href="#">
                     <i class="icon ion-social-freebsd-devil"></i>
                     Все новости 
-                    <span class="badge badge-assertive"> <span ng-bind="DataNews.length"></span></span>
+                    <span class="badge badge-royal"> <span ng-bind="DataNews.length"></span></span>
                 </ion-item>
 
                 <label class="item item-input">
@@ -12,7 +12,7 @@
                     <input type="search" placeholder="search" ng-model="firstName">
                 </label>
                 <div ng-repeat="var in DataNews |  filter:firstName">
-                <a ui-sref="newsPage({ newsId:var.id })">
+                <a ui-sref="news({ newsId:var.id })">
                     <div class="item item-divider"><b> {{ var.name }}</b></div>
                     <ion-item>
                     <div style='padding-left: 20px;'>{{ var.text }}</div>

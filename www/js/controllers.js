@@ -4,9 +4,11 @@ angular.module('app.controllers', [])
 
 
 })
- .controller('newsCtrl', function($scope, $routeParams) {alert(1);
+
+ .controller('newsCtrl', function($scope, $stateParams) {
+  //alert(1);
  // $scope.var.name='Ваня';
-  //$scope.newsId = $routeParams.newsId;
+  $scope.newsId = $stateParams.newsId;
   //var db = openDatabase('mydb', '1.0', 'Test DB',  32* 1024 * 1024);
 })  
 .controller('cartTabDefaultPageCtrl', function($scope) {
@@ -103,19 +105,18 @@ angular.module('app.controllers', [])
    });
   };
 
+
+
     $http.get('http://vpoezdshop.ru/data.json')
-       .success(function(data) {
-        $scope.news = data;
-        $scope.addNews();
-        $scope.DataNews = data;
-       })
-       .error(function() {
-        $scope.select();
-        alert('no internet conection');})
-
-
+    .success(function(data) {
+      $scope.news = data;
+      //$scope.DataNews = data;
+      $scope.addNews();
+      $scope.select();  
+    })
+    .error(function() {
+      $scope.selectFromDb();
+      alert('no internet conection');
+    })
 
 })
-  
-
-    

@@ -6,14 +6,13 @@ angular.module('app.routes', [])
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
-  $urlRouterProvider.otherwise("/page1/page2");
+  $urlRouterProvider.otherwise("/page1/page3");
   $stateProvider
     .state('tabsController', {
     url: '/page1',
     templateUrl: 'templates/tabsController.html',
     abstract:true
   })
-    
 
       .state('tabsController.cameraTabDefaultPage', {
     url: '/page2',
