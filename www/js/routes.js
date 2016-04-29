@@ -8,11 +8,13 @@ angular.module('app.routes', [])
   // Each state's controller can be found in controllers.js
   $stateProvider
     
-    .state('newsPage', {
-      url: '/news/:newsId',
+    .state('news', {
+      url: '/{type}/:newsId',
       templateUrl:'templates/newsPage.html',
-      controller:  function() {
-        
+      controllerProvider: function($stateParams) {
+      var ctrlName = $stateParams.type + "Ctrl";
+      alert ($stateParams.type);
+      return ctrlName;
       }
     })
 
