@@ -9,13 +9,9 @@ angular.module('app.routes', [])
   $stateProvider
     
     .state('news', {
-      url: '/{type}/:newsId',
+      url: '/news/:newsId',
       templateUrl:'templates/newsPage.html',
-      controllerProvider: function($stateParams) {
-      var ctrlName = $stateParams.type + "Ctrl";
-      alert ($stateParams.type);
-      return ctrlName;
-      }
+      controller: 'newsCtrl'
     })
 
       .state('tabsController.cameraTabDefaultPage', {
