@@ -4,7 +4,7 @@ angular.module('app.controllers', [])
 
 
 })
- .controller('NewsCtrl', function($scope, $routeParams) {alert(1);
+ .controller('newsCtrl', function($scope, $routeParams) {alert(1);
  // $scope.var.name='Ваня';
   //$scope.newsId = $routeParams.newsId;
   //var db = openDatabase('mydb', '1.0', 'Test DB',  32* 1024 * 1024);
@@ -108,38 +108,14 @@ angular.module('app.controllers', [])
         $scope.news = data;
         $scope.addNews();
         $scope.DataNews = data;
-       }).error(function() {
+       })
+       .error(function() {
         $scope.select();
         alert('no internet conection');})
 
-    $http.get('http://vpoezdshop.ru/data.json')
-    .success(function(data) {
-      $scope.news = data;
-      //$scope.DataNews = data;
-      $scope.addNews();
-      $scope.select();  
-    })
-    .error(function() {
-      $scope.selectFromDb();
-      alert('no internet conection');
-    })
-    .finally(function() {
-      // Stop the ion-refresher from spinning
-      $scope.$broadcast('scroll.refreshComplete');
-    })
-
-  }
-  
-
-    $http.get('http://vpoezdshop.ru/data.json')
-    .success(function(data) {
-    $scope.news = data;
-    $scope.addNews();
-    $scope.select();
-    })
-    .error(function() {
-    $scope.select();
-    alert('no internet conection');})
 
 
 })
+  
+
+    
