@@ -4,30 +4,45 @@ angular.module('app.controllers', [])
 
 
 })
- .controller('newsCtrl', function($scope, $stateParams) {
-  //alert(1);
- // $scope.var.name='Ваня';
+
+ .controller('newsCtrl', function($scope, $stateParams, $sce) {
+  $scope.var=[];
+  $scope.sce = $sce;
+  $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+  }); 
   $scope.newsId = $stateParams.newsId;
-  //var db = openDatabase('mydb', '1.0', 'Test DB',  32* 1024 * 1024);
+  var db = openDatabase('mydb', '1.0', 'Test DB',  32* 1024 * 1024);
+  db.transaction(function (tx) {
+    tx.executeSql('SELECT * FROM News WHERE id=(?)', [$scope.newsId], function (tx, results) {
+      $scope.var=results.rows.item(0);
+    }, null);
+  })
 })  
 .controller('cartTabDefaultPageCtrl', function($scope) {
   var db = openDatabase('mydb', '1.0', 'Test DB',  32* 1024 * 1024);
   $scope.DataNews=[];
-  $scope.select = function() {
-    db.transaction(function (tx) {
-      tx.executeSql('SELECT * FROM News', [], function (tx, results) {
-         var len = results.rows.length, i;
-         for (i = 0; i < len; i++){
-            $scope.DataNews[i]=results.rows.item(i);
-         }
-      }, null);
-    });
-  }
-  $scope.select();
+  
+    $scope.select = function() {
+      db.transaction(function (tx) {
+        tx.executeSql('SELECT * FROM News', [], function (tx, results) {
+           var len = results.rows.length, i;
+           for (i = 0; i < len; i++){
+              $scope.DataNews[i]=results.rows.item(i);
+           }
+        }, null);
+      });
+    }
+  $scope.$on("$ionicView.beforeEnter", function(event, data){
+    $scope.select();
+  })
 })
    
 .controller('cloudTabDefaultPageCtrl', function($scope) {
-
+ var db = openDatabase('mydb', '1.0', 'Test DB',  32* 1024 * 1024);
+    db.transaction(function (tx) {
+      tx.executeSql('DROP TABLE IF EXISTS News');
+      });
 })
 
 .controller('PhoneListCtrl', function ($scope, $http, $ionicHistory, $state) {
@@ -35,10 +50,9 @@ angular.module('app.controllers', [])
   $scope.DataNews=[];
 
   var db = openDatabase('mydb', '1.0', 'Test DB',  32* 1024 * 1024);
-  var msg;
   db.transaction(function (tx) {
-    tx.executeSql('CREATE TABLE IF NOT EXISTS News (id PRIMARY KEY, name, text)');
-  });
+    tx.executeSql('CREATE TABLE IF NOT EXISTS News (id PRIMARY KEY, name, text, url)');
+  }); 
   $scope.select = function() {
     db.transaction(function (tx) {
       tx.executeSql('SELECT * FROM News', [], function (tx, results) {
@@ -66,7 +80,7 @@ angular.module('app.controllers', [])
     db.transaction(function (tx) {
       angular.forEach( $scope.AddNews,function(value,key){
         //alert('INSERT INTO News (id, name, text) VALUES ('+value.id+', '+value.name+', '+value.text+')');
-        tx.executeSql('INSERT INTO News (id, name, text) VALUES ("'+value.id+'", "'+value.name+'", "'+value.text+'")');
+        tx.executeSql('INSERT INTO News (id, name, text, url) VALUES ("'+value.id+'", "'+value.name+'", "'+value.text+'", "'+value.url+'")');
       });
       
     })
@@ -88,7 +102,7 @@ angular.module('app.controllers', [])
     });
   }
   $scope.doRefresh = function() {
-  $http.get('http://vpoezdshop.ru/data.json')
+  $http.get('data.json')
    .success(function(data) {
     $scope.news = data;
     $scope.addNews();
@@ -106,17 +120,16 @@ angular.module('app.controllers', [])
 
 
 
-    $http.get('http://vpoezdshop.ru/data.json')
+    $http.get('data.json')
     .success(function(data) {
       $scope.news = data;
       //$scope.DataNews = data;
       $scope.addNews();
       $scope.select();  
     })
-    .error(function() {
+    .error(function(response) {
       $scope.selectFromDb();
-      alert('no internet conection');
+      alert('no internet conection'+response);
     })
 
 })
-  
