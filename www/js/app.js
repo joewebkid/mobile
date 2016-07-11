@@ -10,12 +10,19 @@ angular.module('app', ['ionic','ionic.service.core','ngCordova', 'ionic.service.
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     var push = new Ionic.Push({
-      "debug": true
+      "debug": true,
+      "onNotification": function(notification) {
+		    var payload = notification.payload;
+		    console.log(notification, payload);
+		  },
+		  "onRegister": function(data) {
+		    console.log(data.token);
+		  }
     });
- 
     push.register(function(token) {
       console.log("My Device token:",token.token);
       alert(token.token);
+      console.log(token.token);
       push.saveToken(token);  // persist the token in the Ionic Platform
     });
   });
