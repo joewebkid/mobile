@@ -14,7 +14,7 @@
         </ion-item>    
         
            
-                <a  ng-click="showBool2 = !showBool2" class="item item-icon-left">
+                <a style="margin-bottom: 20px;" ng-click="showBool2 = !showBool2" class="item item-icon-left">
                     <i class="icon ion-social-freebsd-devil"></i>
                     Все новости в базе  (Показать/Скрыть)
                     <span ng-show="showBool2" class="ion-unlocked" data-pack="default" data-tags="padlock, security">
@@ -23,18 +23,24 @@
                     </span>
                     <span class="badge badge-assertive"> <span ng-bind="DataNews.length"></span></span>
                 </a>
-            <ion-list  ng-show="showBool2">
-                <label class="item item-input">
-                    <i class="icon ion-search placeholder-icon"></i>
-                    <input type="search" placeholder="search" ng-model="firstName">
-                </label>
-                <div ng-repeat="var in DataNews |  filter:firstName">
-                    <div class="item item-divider"><b>{{ var.id }}) {{ var.name }}</b></div>
-                    <ion-item>
-                    <div style='padding-left: 20px;'>{{ var.text }}</div>
-                    </ion-item>
-                </div>
-            </ion-list>
+                <ion-list   ng-show="showBool2">
+                    <label class="item item-input">
+                        <i class="icon ion-search placeholder-icon"></i>
+                        <input type="search" placeholder="search" ng-model="firstName">
+                    </label>
+                    <div class="card" ng-repeat="var in DataNews |  filter:firstName">
+                       
+                            <div class="item item-text-wrap">
+                                <b> {{ var.name }}</b>
+                                <div style="width:800px;margin-top:20px;" class="">{{ var.text.slice(0, 320) }}...</div>
+                                <a style="float:right;" class="button icon-right ion-chevron-right" ui-sref="news({ newsId:var.id })">Подробнее</a>
+                            </div>
+                            <!--<ion-item>
+                            <div style='padding-left: 20px;'>{{ var.text }}</div>
+                            </ion-item>-->
+                        
+                    </div>
+                </ion-list>
         </div>
     </ion-content>
 </ion-view>

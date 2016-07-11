@@ -20,6 +20,19 @@ angular.module('app.controllers', [])
   })
 })  
 .controller('cartTabDefaultPageCtrl', function($scope) {
+  /*$scope.show = function() {
+    $ionicLoading.show({
+      template: 'Loading...'
+    }).then(function(){
+       console.log("The loading indicator is now displayed");
+    });
+  };
+  $scope.hide = function(){
+    $ionicLoading.hide().then(function(){
+       console.log("The loading indicator is now hidden");
+    });
+  };*/
+
   var db = openDatabase('mydb', '1.0', 'Test DB',  32* 1024 * 1024);
   $scope.DataNews=[];
   
@@ -48,6 +61,8 @@ angular.module('app.controllers', [])
 .controller('PhoneListCtrl', function ($scope, $http, $ionicHistory, $state) {
   $scope.AddNews=[];
   $scope.DataNews=[];
+
+
 
   var db = openDatabase('mydb', '1.0', 'Test DB',  32* 1024 * 1024);
   db.transaction(function (tx) {
@@ -92,8 +107,6 @@ angular.module('app.controllers', [])
     db.transaction(function (tx) {
       tx.executeSql('SELECT * FROM News', [], function (tx, results) {
          var len = results.rows.length, i;
-         msg = "<p>Создано строк: " + len + "</p>";
-         document.querySelector('#status').innerHTML +=  msg;
          for (i = 0; i < len; i++){
             $scope.DataNews[i]=results.rows.item(i);
          }
@@ -102,7 +115,10 @@ angular.module('app.controllers', [])
     });
   }
   $scope.doRefresh = function() {
-  $http.get('data.json')
+
+
+    
+  $http.get('http://www.panda.h1n.ru/data.php')
    .success(function(data) {
     $scope.news = data;
     $scope.addNews();
@@ -120,12 +136,15 @@ angular.module('app.controllers', [])
 
 
 
-    $http.get('data.json')
+    $http.get('http://www.panda.h1n.ru/data.php')
     .success(function(data) {
       $scope.news = data;
       //$scope.DataNews = data;
       $scope.addNews();
-      $scope.select();  
+      $scope.$on("$ionicView.beforeEnter", function(event, data){
+        $scope.select();
+      })
+      //$scope.select();  
     })
     .error(function(response) {
       $scope.selectFromDb();
