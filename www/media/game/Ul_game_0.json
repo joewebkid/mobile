@@ -1,0 +1,724 @@
+{frames {
+
+back_icon_bros.png
+{
+	frame {x1863,y516,w74,h74},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w74,h74},
+	sourceSize {w74,h74}
+},
+back_icon_dimension.png
+{
+	frame {x1551,y1171,w74,h74},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w74,h74},
+	sourceSize {w74,h74}
+},
+back_icon_life.png
+{
+	frame {x1782,y1171,w73,h74},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w73,h74},
+	sourceSize {w73,h74}
+},
+back_icon_missile.png
+{
+	frame {x1628,y1171,w74,h74},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w74,h74},
+	sourceSize {w74,h74}
+},
+back_icon_multishot.png
+{
+	frame {x1858,y1171,w73,h74},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w73,h74},
+	sourceSize {w73,h74}
+},
+back_icon_shield.png
+{
+	frame {x1705,y1171,w74,h74},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w74,h74},
+	sourceSize {w74,h74}
+},
+back_icon_slowmo.png
+{
+	frame {x1550,y1248,w73,h74},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w73,h74},
+	sourceSize {w73,h74}
+},
+big_icon_bros.png
+{
+	frame {x1406,y1235,w82,h82},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w82,h82},
+	sourceSize {w82,h82}
+},
+big_icon_dimension.png
+{
+	frame {x1551,y1171,w74,h74},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w74,h74},
+	sourceSize {w74,h74}
+},
+big_icon_heart.png
+{
+	frame {x1901,y2,w84,h84},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x3,y3,w84,h84},
+	sourceSize {w91,h91}
+},
+big_icon_missile.png
+{
+	frame {x1901,y176,w83,h83},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x4,y4,w83,h83},
+	sourceSize {w92,h91}
+},
+big_icon_multishot.png
+{
+	frame {x1398,y1148,w84,h84},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x3,y3,w84,h84},
+	sourceSize {w91,h91}
+},
+big_icon_shield.png
+{
+	frame {x1901,y262,w83,h83},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x4,y4,w83,h83},
+	sourceSize {w92,h91}
+},
+big_icon_slowmo.png
+{
+	frame {x1901,y89,w84,h84},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x4,y3,w84,h84},
+	sourceSize {w92,h91}
+},
+buton_hold_background.png
+{
+	frame {x1384,y614,w116,h115},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w116,h115},
+	sourceSize {w116,h115}
+},
+buton_hold_charge.png
+{
+	frame {x1131,y744,w94,h95},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w94,h95},
+	sourceSize {w94,h95}
+},
+buton_hold_icon.png
+{
+	frame {x1863,y593,w59,h56},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w59,h56},
+	sourceSize {w59,h56}
+},
+coin1.png
+{
+	frame {x1982,y473,w6,h34},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x18,y4,w6,h34},
+	sourceSize {w41,h41}
+},
+coin2.png
+{
+	frame {x695,y1148,w11,h34},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x16,y4,w11,h34},
+	sourceSize {w41,h41}
+},
+coin3.png
+{
+	frame {x1049,y368,w21,h34},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x12,y4,w21,h34},
+	sourceSize {w41,h41}
+},
+coin4.png
+{
+	frame {x511,y434,w28,h34},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x8,y4,w28,h34},
+	sourceSize {w41,h41}
+},
+coin5.png
+{
+	frame {x608,y1232,w32,h34},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x6,y4,w32,h34},
+	sourceSize {w41,h41}
+},
+coin6.png
+{
+	frame {x1898,y1248,w33,h34},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x4,y4,w33,h34},
+	sourceSize {w41,h41}
+},
+coin7.png
+{
+	frame {x281,y1287,w32,h34},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x4,y4,w32,h34},
+	sourceSize {w41,h41}
+},
+coin8.png
+{
+	frame {x1541,y614,w28,h34},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x5,y4,w28,h34},
+	sourceSize {w41,h41}
+},
+coin9.png
+{
+	frame {x1102,y614,w20,h34},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x9,y4,w20,h34},
+	sourceSize {w41,h41}
+},
+coin10.png
+{
+	frame {x1988,y2,w10,h34},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x15,y4,w10,h34},
+	sourceSize {w41,h41}
+},
+coins_pickup.png
+{
+	frame {x1898,y1248,w33,h34},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x4,y4,w33,h34},
+	sourceSize {w41,h41}
+},
+generic_comms_panel.png
+{
+	frame {x714,y1148,w501,h155},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w501,h155},
+	sourceSize {w501,h155}
+},
+icon_arcade.png
+{
+	frame {x2,y1287,w71,h48},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x15,y27,w71,h48},
+	sourceSize {w101,h101}
+},
+icon_bros.png
+{
+	frame {x1947,y473,w32,h36},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w32,h36},
+	sourceSize {w32,h36}
+},
+icon_burger.png
+{
+	frame {x2,y1287,w71,h48},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x15,y27,w71,h48},
+	sourceSize {w101,h101}
+},
+icon_close_new.png
+{
+	frame {x1947,y414,w56,h56},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x22,y21,w56,h56},
+	sourceSize {w101,h101}
+},
+icon_dimension2.png
+{
+	frame {x134,y1287,w49,h48},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w49,h48},
+	sourceSize {w49,h48}
+},
+icon_exit.png
+{
+	frame {x1925,y593,w59,h56},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x17,y21,w59,h56},
+	sourceSize {w101,h101}
+},
+icon_help.png
+{
+	frame {x1428,y732,w43,h54},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x30,y22,w43,h54},
+	sourceSize {w101,h101}
+},
+icon_home.png
+{
+	frame {x1940,y516,w65,h65},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x17,y14,w65,h65},
+	sourceSize {w101,h101}
+},
+icon_leaderboard.png
+{
+	frame {x1760,y1248,w69,h51},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x16,y22,w69,h51},
+	sourceSize {w101,h101}
+},
+icon_life.png
+{
+	frame {x1485,y1171,w63,h61},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w63,h61},
+	sourceSize {w63,h61}
+},
+icon_locked_silver.png
+{
+	frame {x1898,y1285,w44,h52},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x28,y24,w44,h52},
+	sourceSize {w101,h101}
+},
+icon_medal.png
+{
+	frame {x1945,y1249,w48,h60},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x26,y19,w48,h60},
+	sourceSize {w101,h101}
+},
+icon_missile.png
+{
+	frame {x235,y1287,w43,h43},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w43,h43},
+	sourceSize {w43,h43}
+},
+icon_multishot.png
+{
+	frame {x496,y1148,w42,h27},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w42,h27},
+	sourceSize {w42,h27}
+},
+icon_mute.png
+{
+	frame {x1491,y1235,w56,h55},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x22,y22,w56,h55},
+	sourceSize {w101,h101}
+},
+icon_mute_off.png
+{
+	frame {x76,y1287,w55,h47},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x22,y26,w55,h47},
+	sourceSize {w101,h101}
+},
+icon_next.png
+{
+	frame {x1228,y744,w44,h61},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x31,y19,w44,h61},
+	sourceSize {w101,h101}
+},
+icon_pause.png
+{
+	frame {x1049,y614,w50,h54},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x25,y22,w50,h54},
+	sourceSize {w101,h101}
+},
+icon_play.png
+{
+	frame {x1275,y734,w52,h58},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x27,y20,w52,h58},
+	sourceSize {w101,h101}
+},
+icon_play_large.png
+{
+	frame {x1275,y734,w52,h58},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x27,y20,w52,h58},
+	sourceSize {w101,h101}
+},
+icon_prev.png
+{
+	frame {x1381,y734,w44,h61},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x25,y19,w44,h61},
+	sourceSize {w101,h101}
+},
+icon_replay.png
+{
+	frame {x1947,y348,w58,h63},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x22,y16,w58,h63},
+	sourceSize {w101,h101}
+},
+icon_replay_large.png
+{
+	frame {x1934,y1171,w68,h75},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x53,y45,w68,h75},
+	sourceSize {w174,h174}
+},
+icon_settings.png
+{
+	frame {x1695,y1248,w62,h62},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x19,y18,w62,h62},
+	sourceSize {w101,h101}
+},
+icon_shield.png
+{
+	frame {x186,y1287,w46,h46},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w46,h46},
+	sourceSize {w46,h46}
+},
+icon_shop.png
+{
+	frame {x1832,y1248,w63,h52},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x18,y24,w63,h52},
+	sourceSize {w101,h101}
+},
+icon_slowmo.png
+{
+	frame {x316,y1287,w22,h30},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w22,h30},
+	sourceSize {w22,h30}
+},
+icon_star.png
+{
+	frame {x1330,y734,w48,h61},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x26,y19,w48,h61},
+	sourceSize {w101,h101}
+},
+inner_disc_blue_large.png
+{
+	frame {x1263,y614,w118,h117},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x26,y29,w118,h117},
+	sourceSize {w174,h174}
+},
+inner_disc_blue_small.png
+{
+	frame {x1626,y1248,w66,h66},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x17,y18,w66,h66},
+	sourceSize {w101,h101}
+},
+inner_disc_red_new_small.png
+{
+	frame {x1626,y1248,w66,h66},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x17,y18,w66,h66},
+	sourceSize {w101,h101}
+},
+inner_panel_blue_medium.png
+{
+	frame {x545,y2,w527,h363},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w527,h363},
+	sourceSize {w527,h363}
+},
+inner_panel_blue_shop_A.png
+{
+	frame {x2,y818,w491,h365},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w491,h365},
+	sourceSize {w491,h365}
+},
+inner_panel_blue_shop_B.png
+{
+	frame {x1579,y2,w319,h315},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x11,y0,w319,h315},
+	sourceSize {w330,h335}
+},
+panel_achievement.png
+{
+	frame {x2,y1186,w603,h81},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w603,h81},
+	sourceSize {w603,h81}
+},
+panel_frame_medium.png
+{
+	frame {x2,y2,w540,h404},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x2,y2,w540,h404},
+	sourceSize {w545,h407}
+},
+panel_frame_shop_A.png
+{
+	frame {x2,y409,w506,h406},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x2,y2,w506,h406},
+	sourceSize {w508,h409}
+},
+panel_frame_shop_B.png
+{
+	frame {x1579,y320,w281,h329},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x0,y0,w281,h329},
+	sourceSize {w281,h330}
+},
+panel_list_achievement.png
+{
+	frame {x511,y674,w617,h165},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w617,h165},
+	sourceSize {w617,h165}
+},
+panelbb8.png
+{
+	frame {x1504,y958,w501,h210},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w501,h210},
+	sourceSize {w501,h210}
+},
+power_charge_icon.png
+{
+	frame {x1503,y614,w35,h34},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w35,h34},
+	sourceSize {w35,h34}
+},
+progression_bar.png
+{
+	frame {x2,y1270,w709,h9},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w709,h9},
+	sourceSize {w709,h9}
+},
+progression_bar_flag.png
+{
+	frame {x1863,y320,w12,h22},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w12,h22},
+	sourceSize {w12,h22}
+},
+progression_bar_green.png
+{
+	frame {x2,y1282,w704,h2},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w704,h2},
+	sourceSize {w704,h2}
+},
+progression_last_death.png
+{
+	frame {x511,y409,w31,h22},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w31,h22},
+	sourceSize {w31,h22}
+},
+reflect.png
+{
+	frame {x1228,y808,w30,h28},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w30,h28},
+	sourceSize {w30,h28}
+},
+reflect_play_opacity.png
+{
+	frame {x643,y1232,w30,h28},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w30,h28},
+	sourceSize {w30,h28}
+},
+replay_icon.png
+{
+	frame {x1934,y1171,w68,h75},
+	rotated false,
+	trimmed true,
+	spriteSourceSize {x52,y49,w68,h75},
+	sourceSize {w174,h174}
+},
+shop_big_icon1.png
+{
+	frame {x1218,y1258,w185,h79},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w185,h79},
+	sourceSize {w185,h79}
+},
+shop_big_icon2.png
+{
+	frame {x1218,y1148,w177,h107},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w177,h107},
+	sourceSize {w177,h107}
+},
+shop_big_icon3.png
+{
+	frame {x1131,y614,w129,h127},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w129,h127},
+	sourceSize {w129,h127}
+},
+shop_small_icon1.png
+{
+	frame {x1863,y348,w81,h81},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w81,h81},
+	sourceSize {w81,h81}
+},
+shop_small_icon2.png
+{
+	frame {x608,y1148,w84,h81},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w84,h81},
+	sourceSize {w84,h81}
+},
+shop_small_icon3.png
+{
+	frame {x1863,y432,w81,h81},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w81,h81},
+	sourceSize {w81,h81}
+},
+tutorial_icons.png
+{
+	frame {x1075,y2,w501,h303},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w501,h303},
+	sourceSize {w501,h303}
+},
+tutorial_laser_destop.png
+{
+	frame {x1075,y308,w501,h303},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w501,h303},
+	sourceSize {w501,h303}
+},
+tutorial_laser_mobile.png
+{
+	frame {x545,y368,w501,h303},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w501,h303},
+	sourceSize {w501,h303}
+},
+tutorial_move_destop.png
+{
+	frame {x496,y842,w501,h303},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w501,h303},
+	sourceSize {w501,h303}
+},
+tutorial_move_mobile.png
+{
+	frame {x1000,y842,w501,h303},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w501,h303},
+	sourceSize {w501,h303}
+},
+tutorial_shop.png
+{
+	frame {x1504,y652,w501,h303},
+	rotated false,
+	trimmed false,
+	spriteSourceSize {x0,y0,w501,h303},
+	sourceSize {w501,h303}
+}},
+meta {
+	app httpwww.codeandweb.comtexturepacker,
+	version 1.0,
+	image UI_game_0.png,
+	format RGBA8888,
+	size {w2007,h1339},
+	scale 1,
+	smartupdate $TexturePackerSmartUpdate640d3ed836cc459f75d3dabc9f2b9146f545720c6e5b6270ee5f3ef1b65c4a0bc3d4689ad8bf4be7f1475793f48c41a7$
+}
+}
