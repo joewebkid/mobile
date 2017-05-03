@@ -8,6 +8,8 @@
   <preference name="phonegap-version" value="cli-6.4.0" />
   <preference name="windows-arch" value="x86" />
   <preference name="windows-identity-name" value="PhonegapBuild.PhoneGapBuild" />
+  <preference name="Fullscreen" value="true" />
+  <preference name="Orientation" value="portrait" />
   <icon src="icon2.png"/>
   <platform name="android">
 

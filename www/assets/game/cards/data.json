@@ -1,0 +1,29 @@
+{
+	"1":{
+		"img":"assets/game/cards/1.jpg",
+		"data":{
+			"name":"peltast",
+			"attack":"1",
+			"health":"0",
+			"type":"archer"
+		}
+	},
+	"2":{
+		"img":"assets/game/cards/2.jpg",
+		"data":{
+			"name":"hoplite",
+			"attack":"1",
+			"health":"0",
+			"type":"spear"
+		}
+	},
+	"3":{
+		"img":"assets/game/cards/3.jpg",
+		"data":{
+			"name":"horse rider",
+			"attack":"1",
+			"health":"0",
+			"type":"horse"
+		}
+	}
+}
