@@ -4,3 +4,10 @@ body,html{margin:auto;}
 	font-family: "Shark";
 	src: url(sharkcrash.ttf);
 }
+.font-loader
+{
+    font-family: 'Shark';
+    position: absolute;
+    visibility: hidden;
+    z-index: -1;  
+}

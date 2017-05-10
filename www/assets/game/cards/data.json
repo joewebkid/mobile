@@ -1,29 +1,38 @@
 {
-	"1":{
-		"img":"assets/game/cards/1.jpg",
+	"b1":{
+		"img":"assets/game/cards/dwarf1.png",
 		"data":{
-			"name":"peltast",
+			"name":"dwarf",
 			"attack":"1",
 			"health":"0",
-			"type":"archer"
+			"type":"wb"
 		}
 	},
-	"2":{
-		"img":"assets/game/cards/2.jpg",
+	"b2":{
+		"img":"assets/game/cards/satir1.png",
 		"data":{
-			"name":"hoplite",
+			"name":"satir",
 			"attack":"1",
 			"health":"0",
-			"type":"spear"
+			"type":"bm"
 		}
 	},
-	"3":{
-		"img":"assets/game/cards/3.jpg",
+	"b3":{
+		"img":"assets/game/cards/lepr1.png",
 		"data":{
-			"name":"horse rider",
+			"name":"lepr",
 			"attack":"1",
 			"health":"0",
-			"type":"horse"
+			"type":"mw"
+		}
+	},
+	"b4":{
+		"img":"assets/game/cards/bigfoot.png",
+		"data":{
+			"name":"bigfoot",
+			"attack":"2",
+			"health":"0",
+			"type":"wb"
 		}
 	}
 }
