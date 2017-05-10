@@ -10,10 +10,10 @@ var game = new Phaser.Game(
     // }
 );
 var style = { font: '50px "Shark"', fill: '#FFFFFF', stroke: '#000000', strokeThickness: 10, align: 'center' };
-var styleG = { font: '30px "Shark"', fill: '#FFFFFF', stroke: '#0a73a2', strokeThickness: 5, align: 'right' };
+var styleG = { font: '25px "Shark"', fill: '#FFFFFF', stroke: '#0a73a2', strokeThickness: 5, align: 'right' };
 var styleGold = { font: '30px "Shark"', fill: '#FFFFFF', stroke: '#cd7c3f', strokeThickness: 5, align: 'right' };
 var styleBig = { font: '30px "Shark"', fill: '#FFFFFF', stroke: '#111111', strokeThickness: 5, align: 'right' };
-var scaleRatio = window.devicePixelRatio / 3.7;
+var scaleRatio = window.devicePixelRatio / 1;
 // start boot loader
 function fileComplete(progress, cacheKey, success, totalLoaded, totalFiles) {
     //LoadingText.setText(progress + "%  ");
@@ -82,6 +82,7 @@ var Preloader = {
             game.load.image('gold', './assets/menu/gold.png');
 
             game.load.image('back', './assets/menu/back.jpg'); 
+            game.load.image('backG', './assets/menu/backG.jpg'); 
 
             game.load.image('game_desc', 'assets/game/cards/game_desc.png');
             game.load.image('card_desc', 'assets/game/cards/card_desc.png');

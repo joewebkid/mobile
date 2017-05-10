@@ -39,21 +39,23 @@ var Menu =
 
         var lvl = this.add.sprite(0, 50, 'lvl');
         lvl.anchor.setTo(0, 0.5);
-        lvl.scale.setTo(scaleRatio, scaleRatio);
+        lvl.scale.setTo(scaleRatio/2, scaleRatio/2);
         lvlT = game.add.text(40, lvl.position.y-5, user.lvl, styleG)
         lvlT.anchor.setTo(lvl.anchor.x, lvl.anchor.y);
+        lvlT.scale.setTo(scaleRatio/2, scaleRatio/2);
+
         lvlT = game.add.text(130, lvl.position.y-5, user.exp, styleG)
         lvlT.anchor.setTo(lvl.anchor.x, lvl.anchor.y);
-        lvlT.scale.setTo(scaleRatio, scaleRatio);
+        lvlT.scale.setTo(scaleRatio/2, scaleRatio/2);
 
         
 
         var gold = this.add.sprite(lvl.width+20,50 , 'gold');
         gold.anchor.setTo(0, 0.5);
-        gold.scale.setTo(scaleRatio, scaleRatio);
+        gold.scale.setTo(scaleRatio/2, scaleRatio/2);
         goldT = game.add.text( gold.position.x+130, gold.position.y-5, user.golds, styleGold)
         goldT.anchor.setTo(gold.anchor.x, gold.anchor.y);
-        goldT.scale.setTo(scaleRatio, scaleRatio);
+        goldT.scale.setTo(scaleRatio/2, scaleRatio/2);
 
         button = this.add.button(window.innerWidth/2, window.innerHeight/2, 'start', this.startGame, this);
         button.anchor.setTo(0.5, 0.5); 
@@ -105,27 +107,32 @@ var Game = {
         game.world.setBounds(x, y, w, h);
         game.world.camera.position.set(0);
         // 
-        game.stage.backgroundColor = "#dec19f"
+        // game.stage.backgroundColor = "#dec19f"
 
         clash = game.add.audio('clash');
         back_music.stop();
         ingame.play();
 
-        // bg = this.add.sprite(0, 0, 'back');
-        // he=bg.height
-        // bg.height = game.height;
-        // bg.width = (bg.height/he)*bg.width;
+        bg = this.add.tileSprite(0, 0,game.width,game.height, 'backG');
+        
 
         time = this.add.sprite(window.innerWidth, 0, 'time');
-        time.anchor.setTo(1, 0);
+        time.position.x=time.position.x-time.width/3;
+        time.position.y=time.position.y+time.height/3;
+        time.anchor.setTo(0.5, 0.5);
         time.scale.setTo(scaleRatio, scaleRatio);
 
-        game_desc = this.add.sprite(window.innerWidth/2, window.innerHeight/2, 'game_desc');
+        game_desc = this.add.sprite(0, window.innerHeight/2, 'game_desc');
+        console.log(game_desc.position.x)
         game_desc.anchor.setTo(0.5, 0.5);
+        console.log(game_desc.position.x)
+		game_desc.position.x=game_desc.width/3
+        console.log(game_desc.position.x)
+        console.log(game_desc.position.x)
         game_desc.scale.setTo(scaleRatio, scaleRatio);
 // ENEMY
         for (var key in card_data) {
-            ENEMY[key] = game.add.sprite(window.innerWidth/2, window.innerHeight/4,key)
+            ENEMY[key] = game.add.sprite(window.innerWidth-game_desc.width/2, window.innerHeight/2,key)
             ENEMY[key].anchor.setTo(0.5, 0.5)
             ENEMY[key].visible = 0
             ENEMY[key].scale.setTo(scaleRatio, scaleRatio);
@@ -140,8 +147,8 @@ var Game = {
 // 
 
         koloda = game.add.sprite(0, 0,'koloda')
-        koloda.position.copyFrom(ENEMY['b1'].position);
         koloda.anchor.setTo(0.5, 0.5);
+        koloda.position.copyFrom(ENEMY['b1'].position);
         koloda.scale.setTo(scaleRatio, scaleRatio);
         game.world.sendToBack(koloda)
         game.world.moveUp(koloda)
@@ -168,8 +175,9 @@ var Game = {
         total = 5
         cards = Game.add.group();
         cards.inputEnableChildren = true;
-
+        i=0
         for (var key in card_data) {
+        	i++
             cardsArr[key] = cards.create(100*key[1], 100, key);
             cardsArr[key].input.enableDrag(false, true);
 
@@ -179,11 +187,16 @@ var Game = {
             // cardsArr[key].scale.set(1);
             cardsArr[key].scale.setTo(scaleRatio, scaleRatio);
 // card mem
-            Card.add(cardsArr[key].key,gameMem.player.cards,gameMem.player.cardPlace)
-// card position
-            cardsArr[key].position.copyFrom(card_desc.position); 
-            cardsArr[key].anchor.setTo((gameMem.player.cardPlace[key]-1)-card_desc.anchor.x, card_desc.anchor.y); 
-// card position
+			if(i<=3){
+	            Card.add(cardsArr[key].key,gameMem.player.cards,gameMem.player.cardPlace)
+	// card position
+	            cardsArr[key].position.copyFrom(card_desc.position); 
+	            cardsArr[key].anchor.setTo((gameMem.player.cardPlace[key]-1)-card_desc.anchor.x, card_desc.anchor.y); 
+    // card position
+			}else{
+				cardsArr[key].visible=0
+			}
+
             game.physics.enable(cardsArr[key], Phaser.Physics.ARCADE);
         }
 
@@ -197,9 +210,9 @@ var Game = {
         timer.start();
 
         // this.add.button(0, 0, 'back', this.inMenu, this);
-        t = game.add.text(window.innerWidth-20, 0, 30, styleG)
+        t = game.add.text(0, 0, 30, styleG)
         t.position.copyFrom(time.position);
-        t.anchor.setTo(time.anchor.x/4, time.anchor.y);
+        t.anchor.setTo(-0.5, 0.5);
 
         health_bar = game.add.text(0, window.innerHeight-50, 1, styleG)
         health_bar_enemy = game.add.text(0, 0, 1, styleG)
@@ -208,6 +221,13 @@ var Game = {
     { 
         
         
+    },
+    pushNewCard: function (elem) 
+    { 
+        Card.add(elem.key,gameMem.player.cards,gameMem.player.cardPlace)
+        elem.visible=1
+        elem.position.copyFrom(card_desc.position); 
+        elem.anchor.setTo((gameMem.player.cardPlace[elem.key]-1)-card_desc.anchor.x, card_desc.anchor.y);         
     },
     updateCounter: function () {
         if(total!=0){
@@ -253,6 +273,7 @@ var Game = {
                     this.knock(EnemyCard,cardsArr[YOUR_CARD[0] ],'enemy')
                     gameMem.player.hp-=enemAttack
                 }
+
                 // this.knock(cardsArr[YOUR_CARD[0][1]],ENEMY)
 
 
@@ -293,19 +314,19 @@ var Game = {
         }
         tween = Game.add.tween(obj.scale).to( { x:scaleRatio, y:scaleRatio }, 100, Phaser.Easing.Linear.None, true);
 
+        Card.remove(obj.key,gameMem.player.cards,gameMem.player.cardPlace)
 
         game.physics.arcade.collide(obj, card_desc)
         if (!game.physics.arcade.overlap(obj, card_desc, function() {
             
             Card.add(obj.key,gameMem.player.cards,gameMem.player.cardPlace)
-
             obj.position.copyFrom(card_desc.position); 
             obj.anchor.setTo((gameMem.player.cardPlace[obj.key]-1)-card_desc.anchor.x, card_desc.anchor.y); 
         }))
         { 
-            Card.remove(obj.key,gameMem.player.cards,gameMem.player.cardPlace)
+            Card.add(obj.key,gameMem.player.cards,gameMem.player.cardPlace)
             obj.position.copyFrom(card_desc.position); 
-            obj.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y); 
+            obj.anchor.setTo((gameMem.player.cardPlace[obj.key]-1)-card_desc.anchor.x, card_desc.anchor.y); 
         }
 
         game.physics.arcade.collide(obj, game_desc)
@@ -337,7 +358,7 @@ var Game = {
                 // obj.position.copyFrom(card_desc.position); 
                 // obj.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y); 
             var tween2 = game.add.tween(elem).to({
-                 y: enemy.position.y
+                 x: enemy.position.x
             }, 700, Phaser.Easing.Linear.None, true);
 
 
@@ -365,6 +386,8 @@ var Game = {
                             elem.input.enableDrag(false, true);                        
                             Card.remove(elem.key,gameMem.game.cards,gameMem.player.cardPlace)
                             enemy.visible = 0
+
+                			Game.pushNewCard(elem)
                         }else{
                             enemy.position.copyFrom(0,card_desc.position.y+100); 
                             enemy.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y); 
@@ -373,6 +396,8 @@ var Game = {
 
                             elem.position.y=EnemyPosition;                   
                             elem.visible = 0
+
+                			Game.pushNewCard(enemy)
                             // elem.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y); 
 
                         }
