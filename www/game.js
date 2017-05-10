@@ -3,18 +3,6 @@ var Menu =
 { 
     preload: function () 
     { 
-            game.load.image('quake', './assets/game/quake.png');             
-            game.load.image('blanc', './assets/menu/blanc.png');             
-            game.load.image('lvl', './assets/menu/level.png');             
-            game.load.image('koloda', './assets/menu/koloda.png');             
-            game.load.audio('win', ['./assets/game/music/win.mp3']);
-            game.load.audio('clash', ['./assets/game/music/clash.mp3']);
-            game.load.audio('back', ['./assets/game/music/back.mp3']);
-            game.load.audio('ingame', ['./assets/game/music/game.mp3']);
-
-            styleGold = { font: '30px "Shark"', fill: '#FFFFFF', stroke: '#cd7c3f', strokeThickness: 5, align: 'right' };
-            styleBig = { font: '30px "Shark"', fill: '#FFFFFF', stroke: '#111111', strokeThickness: 5, align: 'right' };
-
         gameMem = MoSql.getOrSet('game',{
             'player':{
                 'cards':user['cards'],
@@ -208,11 +196,17 @@ var Game = {
             if(l){
 
                 enemyCardNum=this.randomInteger(1,4)
+                yourName=card_data[YOUR_CARD[0]]['data'].name
                 yourType=card_data[YOUR_CARD[0]]['data'].type
+                yourTypeText=card_data[YOUR_CARD[0]]['data'].type_text
                 yourAttack=card_data[YOUR_CARD[0]]['data'].attack
+                yourAttackText=card_data[YOUR_CARD[0]]['data'].attack_text
 
+                enemName=card_data['b'+enemyCardNum]['data'].name
                 enemType=card_data['b'+enemyCardNum]['data'].type
+                enemTypeText=card_data['b'+enemyCardNum]['data'].type_text
                 enemAttack=card_data['b'+enemyCardNum]['data'].attack
+                enemAttackText=card_data['b'+enemyCardNum]['data'].attack_text
 
                 EnemyCard=ENEMY['b'+enemyCardNum]
                 EnemyCard.visible=1;
@@ -222,20 +216,20 @@ var Game = {
                 bigText.alpha = 1
 
                 if(yourType[0]==enemType[0]){
-                    bigText.text ="Ничья"
+                    bigText.text ="Ничья \n"+" "+yourTypeText+" "+yourName+" не может победить "+enemTypeText+" "+enemName
                     this.knock(EnemyCard,cardsArr[YOUR_CARD[0] ],'enemy')
                     this.knock(cardsArr[YOUR_CARD[0] ],EnemyCard)
 
                     gameMem.player.hp-=enemAttack
                     gameMem.enemy.hp-=yourAttack
                 }else if(yourType[1]==enemType[0]){
-                    bigText.text ="Победа за вами"
+                    bigText.text ="Победа за вами \n"+yourTypeText+" "+yourName+" "+yourAttackText+" "+enemTypeText+" "+enemName
                     this.knock(cardsArr[YOUR_CARD[0] ],EnemyCard)
                     gameMem.enemy.hp-=yourAttack
                 }else{
-                    bigText.text ="В этот раз не повезло"
-                    gameMem.player.hp-=enemAttack
+                    bigText.text ="В этот раз не повезло \n"+enemTypeText+" "+enemName+" "+enemAttackText+" "+yourTypeText+" "+yourName
                     this.knock(EnemyCard,cardsArr[YOUR_CARD[0] ],'enemy')
+                    gameMem.player.hp-=enemAttack
                 }
                 // this.knock(cardsArr[YOUR_CARD[0][1]],ENEMY)
 
@@ -307,68 +301,72 @@ var Game = {
 
     },
     knock:function(elem,enemy,whose){
+    
 
-        scale_tween = game.add.tween(elem.scale).to({
-             x: 1.8, y: 1.8
+        visible = game.add.tween(elem).to({
+            alpha:1
         }, 500, Phaser.Easing.Linear.None, true);
-        game.world.bringToTop(elem)
-            // obj.position.copyFrom(card_desc.position); 
-            // obj.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y); 
-        var tween2 = game.add.tween(elem).to({
-             y: enemy.position.y
-        }, 700, Phaser.Easing.Linear.None, true);
+
+        visible.onComplete.add(function(elem) {
+            scale_tween = game.add.tween(elem.scale).to({
+                 x: 1.8, y: 1.8
+            }, 500, Phaser.Easing.Linear.None, true);
+            game.world.bringToTop(elem)
+                // obj.position.copyFrom(card_desc.position); 
+                // obj.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y); 
+            var tween2 = game.add.tween(elem).to({
+                 y: enemy.position.y
+            }, 700, Phaser.Easing.Linear.None, true);
 
 
-        tween2.onComplete.add(function(elem) {
+            tween2.onComplete.add(function(elem) {
 
-            var tween3 = game.add.tween(elem.scale).to({
-             x: 1, y: 1
-            }, 200, Phaser.Easing.Bounce.InOut, true);
-clash.play();
-            tween3.onComplete.add(function() {  
-                if(whose!='enemy'){quake2.visible = 1}
-                else{quake.visible = 1}                
-                var tween4 = game.add.tween(game.camera).to({
-                    x: game.camera.x - 10
-                },10, Phaser.Easing.Bounce.InOut, true,300,4,true);
-// addQuake()
-// console.log()
-                tween4.onComplete.add(function() {
-                    if(whose!='enemy'){
-                        // position
-                        elem.position.copyFrom(0,card_desc.position.y); 
-                        // position
-                        
-                        elem.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y); 
-                        elem.input.enableDrag(false, true);                        
-                        Card.remove(elem.key,gameMem.game.cards,gameMem.player.cardPlace)
-                        enemy.visible = 0
-                    }else{
-                        enemy.position.copyFrom(0,card_desc.position.y); 
-                        enemy.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y); 
-                        enemy.input.enableDrag(false, true);                        
-                        Card.remove(enemy.key,gameMem.game.cards,gameMem.player.cardPlace)
+                var tween3 = game.add.tween(elem.scale).to({
+                 x: 1, y: 1
+                }, 200, Phaser.Easing.Bounce.InOut, true);
+                clash.play();
+                tween3.onComplete.add(function() {  
+                    if(whose!='enemy'){quake2.visible = 1}
+                    else{quake.visible = 1}                
+                    var tween4 = game.add.tween(game.camera).to({
+                        x: game.camera.x - 10
+                    },10, Phaser.Easing.Bounce.InOut, true,300,4,true);
+    // addQuake()
+    // console.log()
+                    tween4.onComplete.add(function() {
+                        if(whose!='enemy'){
+                            // position
+                            elem.position.copyFrom(0,card_desc.position.y); 
+                            // position
+                            
+                            elem.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y); 
+                            elem.input.enableDrag(false, true);                        
+                            Card.remove(elem.key,gameMem.game.cards,gameMem.player.cardPlace)
+                            enemy.visible = 0
+                        }else{
+                            enemy.position.copyFrom(0,card_desc.position.y); 
+                            enemy.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y); 
+                            enemy.input.enableDrag(false, true);                        
+                            Card.remove(enemy.key,gameMem.game.cards,gameMem.player.cardPlace)
 
-                        elem.position.y=EnemyPosition;                   
-                        elem.visible = 0
-                        quake.visible = 0
-                        quake2.visible = 0
-                        // elem.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y); 
+                            elem.position.y=EnemyPosition;                   
+                            elem.visible = 0
+                            // elem.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y); 
 
-                    }
-                        quake.visible = 0
-                        quake2.visible = 0
-                    game.world.sendToBack(elem)
-                    game.world.moveUp(elem)
+                        }
+                            quake.visible = 0
+                            quake2.visible = 0
+                        game.world.sendToBack(elem)
+                        game.world.moveUp(elem)
 
-                    if(gameMem.player.hp<=0 || gameMem.enemy.hp<=0){
-                        // LOOSE
-                        game.state.start('WIN'); 
-                    }
+                        if(gameMem.player.hp<=0 || gameMem.enemy.hp<=0){
+                            // LOOSE
+                            game.state.start('WIN'); 
+                        }
+                    })
                 })
             })
         })
-
     }
 
 };

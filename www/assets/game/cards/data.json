@@ -2,37 +2,45 @@
 	"b1":{
 		"img":"assets/game/cards/dwarf1.png",
 		"data":{
-			"name":"dwarf",
+			"name":"Гном",
+			"attack_text":"бьет киркой",
 			"attack":"1",
 			"health":"0",
-			"type":"wb"
+			"type":"wb",
+			"type_text":"Воин"
 		}
 	},
 	"b2":{
 		"img":"assets/game/cards/satir1.png",
 		"data":{
-			"name":"satir",
+			"name":"Сатир",
+			"attack_text":"лягает",
 			"attack":"1",
 			"health":"0",
-			"type":"bm"
+			"type":"bm",
+			"type_text":"Зверь"
 		}
 	},
 	"b3":{
 		"img":"assets/game/cards/lepr1.png",
 		"data":{
-			"name":"lepr",
+			"name":"Лепрекон",
+			"attack_text":"зачаровывает",
 			"attack":"1",
 			"health":"0",
-			"type":"mw"
+			"type":"mw",
+			"type_text":"Маг"
 		}
 	},
 	"b4":{
 		"img":"assets/game/cards/bigfoot.png",
 		"data":{
-			"name":"bigfoot",
+			"name":"Бигфут",
+			"attack_text":"давит",
 			"attack":"2",
 			"health":"0",
-			"type":"wb"
+			"type":"wb",
+			"type_text":"Воин"
 		}
 	}
 }

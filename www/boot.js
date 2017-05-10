@@ -9,8 +9,11 @@ var game = new Phaser.Game(
     //     update: update
     // }
 );
+game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;game.scale.minWidth = 320;game.scale.minHeight = 480;game.scale.maxWidth = 768;game.scale.maxHeight = 1152;
 var style = { font: '50px "Shark"', fill: '#FFFFFF', stroke: '#000000', strokeThickness: 10, align: 'center' };
 var styleG = { font: '30px "Shark"', fill: '#FFFFFF', stroke: '#0a73a2', strokeThickness: 5, align: 'right' };
+var styleGold = { font: '30px "Shark"', fill: '#FFFFFF', stroke: '#cd7c3f', strokeThickness: 5, align: 'right' };
+var styleBig = { font: '30px "Shark"', fill: '#FFFFFF', stroke: '#111111', strokeThickness: 5, align: 'right' };
 
 // start boot loader
 function fileComplete(progress, cacheKey, success, totalLoaded, totalFiles) {
@@ -84,6 +87,15 @@ var Preloader = {
             
             game.load.json('data', 'assets/game/cards/data.json');
             game.load.json('newUser', 'assets/game/cards/newUser.json');
+
+            game.load.image('quake', './assets/game/quake.png');             
+            game.load.image('blanc', './assets/menu/blanc.png');             
+            game.load.image('lvl', './assets/menu/level.png');             
+            game.load.image('koloda', './assets/menu/koloda.png');             
+            game.load.audio('win', ['./assets/game/music/win.mp3']);
+            game.load.audio('clash', ['./assets/game/music/clash.mp3']);
+            game.load.audio('back', ['./assets/game/music/back.mp3']);
+            game.load.audio('ingame', ['./assets/game/music/game.mp3']);
             
         debuger.pointEnd('loadAssets');
     },
