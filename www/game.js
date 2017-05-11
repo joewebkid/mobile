@@ -337,16 +337,14 @@ var Game = {
         //     game.physics.arcade.collide(item,obj);
         //     if (!game.physics.arcade.overlap(item, obj, console.log('hui2')) ){console.log('hui2')};
         // }, this);
-        console.log(obj)
 
         game.physics.arcade.collide(obj, card_desc)
-        if (!game.physics.arcade.overlap(obj, card_desc, function() {    
-        console.log(1)      
+        if (!game.physics.arcade.overlap(obj, card_desc, function() {      
             Card.add(obj.key,gameMem.player.cards,gameMem.player.cardPlace)
             obj.position.copyFrom(card_desc.position); 
             obj.anchor.setTo((gameMem.player.cardPlace[obj.key]-1)-card_desc.anchor.x, card_desc.anchor.y); 
         }))
-        { console.log(2)
+        {
             Card.add(obj.key,gameMem.player.cards,gameMem.player.cardPlace)
             obj.position.copyFrom(card_desc.position); 
             obj.anchor.setTo((gameMem.player.cardPlace[obj.key]-1)-card_desc.anchor.x, card_desc.anchor.y); 
@@ -427,6 +425,7 @@ var Game = {
                             quake2.visible = 0
                             game.world.sendToBack(elem)
                             game.world.moveUp(elem)
+                            game.world.moveUp(elem)
 
                             if(gameMem.player.hp<=0){
                                 // LOOSE
@@ -448,20 +447,23 @@ var WIN = {
     preload: function (){},
     create: function (){
         ingame.stop();
-        user.golds+=15
-        user.exp+=15
-        MoSql.set('user',user)
+        salary=15
         if(win){
             button = this.add.button(window.innerWidth/2, window.innerHeight/2, 'win', this.inMenu, this);
-            LoadingText = game.add.text(game.world.width / 2, game.world.height / 2, "You win", style);
+            LoadingText = game.add.text(game.world.width / 2, game.world.height / 2, "You win\nВаша награда "+salary+" золота", style);
+
+
+            user.golds+=salary
+            user.exp+=15
+            MoSql.set('user',user)
         }
         else{
-         button = this.add.button(window.innerWidth/2, window.innerHeight/2, 'lose', this.inMenu, this);
+            button = this.add.button(window.innerWidth/2, window.innerHeight/2, 'lose', this.inMenu, this);
             LoadingText = game.add.text(game.world.width / 2, game.world.height / 2, "You lose ", style);
         }
-
         button.anchor.setTo(0.5, 0.5);
-        LoadingText.anchor.setTo(0.5, 0.5);
+        LoadingText.position.copyFrom(button.position); 
+        LoadingText.anchor.setTo(button.anchor.x, button.anchor.y);
         // LoadingText.inputEnabled = true;
         // LoadingText.events.onInputDown.add(game.state.start('Menu'), this);
 
