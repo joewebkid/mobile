@@ -12,7 +12,7 @@ var game = new Phaser.Game(
 var style = { font: '50px "Shark"', fill: '#FFFFFF', stroke: '#000000', strokeThickness: 10, align: 'center' };
 var styleG = { font: '25px "Shark"', fill: '#FFFFFF', stroke: '#0a73a2', strokeThickness: 5, align: 'right' };
 var styleGold = { font: '30px "Shark"', fill: '#FFFFFF', stroke: '#cd7c3f', strokeThickness: 5, align: 'right' };
-var styleBig = { font: '30px "Shark"', fill: '#FFFFFF', stroke: '#111111', strokeThickness: 5, align: 'right' };
+var styleBig = { font: '20px "Droid Sans"', fill: '#FFFFFF', stroke: '#33251a', strokeThickness: 4, align: 'left' };
 var scaleRatio = window.devicePixelRatio / 1;
 // start boot loader
 function fileComplete(progress, cacheKey, success, totalLoaded, totalFiles) {
@@ -36,7 +36,7 @@ function fileComplete(progress, cacheKey, success, totalLoaded, totalFiles) {
     game.world.bringToTop(txt)
     
     
-    console.log(progress);
+    // console.log(progress);
     
     // LoadingText.setText(cacheKey+" Complete: " + progress + "%  ");
     // LoadingText.setText("File Complete: " + progress + "% - " + totalLoaded + " out of " + totalFiles);
@@ -80,6 +80,9 @@ var Preloader = {
             game.load.image('cards', './assets/menu/butt_cards.png'); 
             game.load.image('time', './assets/menu/time.png');
             game.load.image('gold', './assets/menu/gold.png');
+
+            game.load.image('win', './assets/menu/win.png');
+            game.load.image('lose', './assets/menu/lose.png');
 
             game.load.image('back', './assets/menu/back.jpg'); 
             game.load.image('backG', './assets/menu/backG.jpg'); 
