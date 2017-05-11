@@ -232,6 +232,7 @@ var Game = {
         visible = game.add.tween(elem.position).to({
             x:card_desc.position.x,y:card_desc.position.y
         }, 500, Phaser.Easing.Linear.None, true);
+        game.world.bringToTop(elem)
 
         elem.anchor.setTo((gameMem.player.cardPlace[elem.key]-1)-card_desc.anchor.x, card_desc.anchor.y); 
         elem.input.enableDrag(false, true);
