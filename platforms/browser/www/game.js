@@ -1,13 +1,18 @@
+var tween = null;
+cardsArr=[];
+ENEMY=[];
 
-var Menu = 
-{ 
-    preload: function () 
-    { 
+var Game = { 
+    preload: function ()
+    {             
         gameMem = MoSql.getOrSet('game',{
             'player':{
                 'cards':user['cards'],
                 'cardPlace':[],
                 'hp':user['hp'],
+            },
+            'stack':{
+                'cards':[]
             }
             ,
             'enemy':{
@@ -18,84 +23,7 @@ var Menu =
             'game':{
                 'cards':[]
             }
-        })
-    }, 
-    create: function () 
-    {         
-        Menu.physics.startSystem(Phaser.Physics.ARCADE);
-
-    game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
-    game.scale.startFullScreen(false);
-    
-        back_music = game.add.audio('back');
-        ingame = game.add.audio('ingame');
-        back_music.play();
-        back_music.loopFull(0.6);
-
-        bg = this.add.sprite(0, 0, 'back');
-        he=bg.height
-        bg.height = game.height;
-        bg.width = (bg.height/he)*bg.width;
-
-        var lvl = this.add.sprite(0, 50, 'lvl');
-        lvl.anchor.setTo(0, 0.5);
-        lvl.scale.setTo(scaleRatio/2, scaleRatio/2);
-        lvlT = game.add.text(40, lvl.position.y-5, user.lvl, styleG)
-        lvlT.anchor.setTo(lvl.anchor.x, lvl.anchor.y);
-        lvlT.scale.setTo(scaleRatio/2, scaleRatio/2);
-
-        lvlT = game.add.text(130, lvl.position.y-5, user.exp, styleG)
-        lvlT.anchor.setTo(lvl.anchor.x, lvl.anchor.y);
-        lvlT.scale.setTo(scaleRatio/2, scaleRatio/2);
-
-        
-
-        var gold = this.add.sprite(lvl.width+20,50 , 'gold');
-        gold.anchor.setTo(0, 0.5);
-        gold.scale.setTo(scaleRatio/2, scaleRatio/2);
-        goldT = game.add.text( gold.position.x+130, gold.position.y-5, user.golds, styleGold)
-        goldT.anchor.setTo(gold.anchor.x, gold.anchor.y);
-        goldT.scale.setTo(scaleRatio/2, scaleRatio/2);
-
-        button = this.add.button(window.innerWidth/2, window.innerHeight/2, 'start', this.startGame, this);
-        button.anchor.setTo(0.5, 0.5); 
-
-
-        button.scale.setTo(scaleRatio, scaleRatio);
-
-        setting = this.add.button(window.innerWidth-247, window.innerHeight-121, 'setting', this.setting, this); 
-        setting.scale.setTo(scaleRatio, scaleRatio);
-
-        cards = this.add.button(0, window.innerHeight-121, 'cards', this.cards, this); 
-        cards.scale.setTo(scaleRatio, scaleRatio);
-
-        // buttonText = game.add.text(game.world.width / 2, game.world.height / 2, "Game", style);
-        // buttonText.anchor.setTo(0.5, 0.5);
-    }, 
-    startGame: function () 
-    { 
-        // var tween = Menu.add.tween(button.scale).to({y:game.height - 200},0, Phaser.Easing.Bounce.Out, true);
-        // tween.onComplete.add(function() {})
-        game.state.start('Game'); 
-        
-    } ,
-    setting: function () 
-    { 
-        
-    } ,
-    cards: function () 
-    { 
-        
-    } 
-};
-
-var tween = null;
-cardsArr=[];
-ENEMY=[];
-
-var Game = { 
-    preload: function ()
-    {        
+        })   
         game.physics.startSystem(Phaser.Physics.ARCADE)
         var margin = 50;
         // and set the world's bounds according to the given margin
@@ -112,6 +40,7 @@ var Game = {
         clash = game.add.audio('clash');
         back_music.stop();
         ingame.play();
+        ingame.volume=settings.volume
 
         bg = this.add.tileSprite(0, 0,game.width,game.height, 'backG');
         
@@ -123,12 +52,8 @@ var Game = {
         time.scale.setTo(scaleRatio, scaleRatio);
 
         game_desc = this.add.sprite(0, window.innerHeight/2, 'game_desc');
-        console.log(game_desc.position.x)
         game_desc.anchor.setTo(0.5, 0.5);
-        console.log(game_desc.position.x)
 		game_desc.position.x=game_desc.width/3
-        console.log(game_desc.position.x)
-        console.log(game_desc.position.x)
         game_desc.scale.setTo(scaleRatio, scaleRatio);
 // ENEMY
         for (var key in card_data) {
@@ -137,7 +62,7 @@ var Game = {
             ENEMY[key].visible = 0
             ENEMY[key].scale.setTo(scaleRatio, scaleRatio);
         }
-        EnemyPosition=ENEMY['b1'].position.y 
+        EnemyPosition=ENEMY['b1'].position.x 
 // ENEMY END
         bigText = game.add.text(window.innerWidth/2, 50, "...", styleBig)
         bigText.anchor.setTo(0.5, 0.5);
@@ -194,12 +119,13 @@ var Game = {
 	            cardsArr[key].anchor.setTo((gameMem.player.cardPlace[key]-1)-card_desc.anchor.x, card_desc.anchor.y); 
     // card position
 			}else{
+                gameMem.stack.cards.push(cardsArr[key].key)
 				cardsArr[key].visible=0
 			}
 
             game.physics.enable(cardsArr[key], Phaser.Physics.ARCADE);
         }
-
+        this.nextElem ()
         // ENEMY = cards.create(window.innerWidth/2, window.innerHeight/4, key);
         // ENEMY.anchor.setTo(0.5, 0.5)
         // EnemyPosition=ENEMY.position.y
@@ -222,66 +148,6 @@ var Game = {
         
         
     },
-    pushNewCard: function (elem) 
-    { 
-        Card.add(elem.key,gameMem.player.cards,gameMem.player.cardPlace)
-        elem.visible=1
-        elem.position.copyFrom(card_desc.position); 
-        elem.anchor.setTo((gameMem.player.cardPlace[elem.key]-1)-card_desc.anchor.x, card_desc.anchor.y);         
-    },
-    updateCounter: function () {
-        if(total!=0){
-            total--;
-        }else{
-            l=gameMem.game.cards.length
-            YOUR_CARD=gameMem.game.cards
-            if(l){
-
-                enemyCardNum=this.randomInteger(1,4)
-                yourName=card_data[YOUR_CARD[0]]['data'].name
-                yourType=card_data[YOUR_CARD[0]]['data'].type
-                yourTypeText=card_data[YOUR_CARD[0]]['data'].type_text
-                yourAttack=card_data[YOUR_CARD[0]]['data'].attack
-                yourAttackText=card_data[YOUR_CARD[0]]['data'].attack_text
-
-                enemName=card_data['b'+enemyCardNum]['data'].name
-                enemType=card_data['b'+enemyCardNum]['data'].type
-                enemTypeText=card_data['b'+enemyCardNum]['data'].type_text
-                enemAttack=card_data['b'+enemyCardNum]['data'].attack
-                enemAttackText=card_data['b'+enemyCardNum]['data'].attack_text
-
-                EnemyCard=ENEMY['b'+enemyCardNum]
-                EnemyCard.visible=1;
-                EnemyCard.inputEnabled = true;
-                EnemyCard.input.enableDrag(false, true);
-
-                bigText.alpha = 1
-
-                if(yourType[0]==enemType[0]){
-                    bigText.text ="Ничья \n"+" "+yourTypeText+" "+yourName+" не может победить "+enemTypeText+" "+enemName
-                    this.knock(EnemyCard,cardsArr[YOUR_CARD[0] ],'enemy')
-                    this.knock(cardsArr[YOUR_CARD[0] ],EnemyCard)
-
-                    gameMem.player.hp-=enemAttack
-                    gameMem.enemy.hp-=yourAttack
-                }else if(yourType[1]==enemType[0]){
-                    bigText.text ="Победа за вами \n"+yourTypeText+" "+yourName+" "+yourAttackText+" "+enemTypeText+" "+enemName
-                    this.knock(cardsArr[YOUR_CARD[0] ],EnemyCard)
-                    gameMem.enemy.hp-=yourAttack
-                }else{
-                    bigText.text ="В этот раз не повезло \n"+enemTypeText+" "+enemName+" "+enemAttackText+" "+yourTypeText+" "+yourName
-                    this.knock(EnemyCard,cardsArr[YOUR_CARD[0] ],'enemy')
-                    gameMem.player.hp-=enemAttack
-                }
-
-                // this.knock(cardsArr[YOUR_CARD[0][1]],ENEMY)
-
-
-            }
-            total=5
-
-        }
-    },
     render: function () 
     { 
         var text = timer.duration.toFixed(0);
@@ -290,6 +156,93 @@ var Game = {
         health_bar.text=gameMem.player.hp
         health_bar_enemy.text=gameMem.enemy.hp
     }, 
+
+    nextElem: function(){
+        elem=cardsArr[gameMem.stack.cards[gameMem.stack.cards.length-1]]
+        elem.visible=1
+        elem.scale={x:scaleRatio/1.5, y:scaleRatio/1.5}
+        elem.input.draggable = false;
+        elem.position.x=0 + elem.width/2,
+        elem.position.y=window.innerHeight - elem.height/2
+        elem.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y);
+    },
+    pushNewCard: function () 
+    { 
+        cardStack=gameMem.stack.cards.pop()
+        elem=cardsArr[cardStack]
+        console.log(gameMem.player.cardPlace)
+        Card.add(elem.key,gameMem.player.cards,gameMem.player.cardPlace)
+
+        console.log(gameMem.player.cardPlace)
+        elem.anchor.setTo((gameMem.player.cardPlace[elem.key]-1)-card_desc.anchor.x, card_desc.anchor.y);
+        // elem.visible=1
+        // elem.position.copyFrom(card_desc.position); 
+        var tween3 = game.add.tween(elem.scale).to({
+            x:scaleRatio, y:scaleRatio
+        }, 200, Phaser.Easing.Bounce.InOut, true);
+
+        visible = game.add.tween(elem.position).to({
+            x:card_desc.position.x,y:card_desc.position.y
+        }, 500, Phaser.Easing.Linear.None, true);
+
+        visible.onComplete.add(function(elem_pos) {
+            elem.input.enableDrag(false, true); 
+            Game.nextElem ()   
+        })     
+    },
+
+    updateCounter: function () {
+        if(total!=0){
+            total--;
+        }else{
+            l=gameMem.game.cards.length
+            YOUR_CARD=gameMem.game.cards
+            if(l){
+// Your card DATA
+                yourName=card_data[YOUR_CARD[0]]['data'].name
+                yourType=card_data[YOUR_CARD[0]]['data'].type
+                yourTypeText=card_data[YOUR_CARD[0]]['data'].type_text
+                yourAttack=card_data[YOUR_CARD[0]]['data'].attack
+                yourAttackText=card_data[YOUR_CARD[0]]['data'].attack_text
+// end Your card DATA
+// enemy card DATA
+                enemyCardNum=this.randomInteger(1,4)
+                enemName=card_data['b'+enemyCardNum]['data'].name
+                enemType=card_data['b'+enemyCardNum]['data'].type
+                enemTypeText=card_data['b'+enemyCardNum]['data'].type_text
+                enemAttack=card_data['b'+enemyCardNum]['data'].attack
+                enemAttackText=card_data['b'+enemyCardNum]['data'].attack_text
+// end enemy card DATA
+                EnemyCard=ENEMY['b'+enemyCardNum]
+                EnemyCard.visible=1;
+
+                bigText.alpha = 1
+// steps for game
+                if(yourType[0]==enemType[0]){
+                    bigText.text ="Ничья! \n\""+yourTypeText+" "+yourName+"\" не может победить \""+enemTypeText+" "+enemName+"\""+"\nурон противнику: "+yourAttack
+                    this.knock(cardsArr[YOUR_CARD[0] ],EnemyCard,'double')
+                    this.knock(EnemyCard,cardsArr[YOUR_CARD[0] ],'enemy')
+
+                    gameMem.player.hp-=enemAttack
+                    gameMem.enemy.hp-=yourAttack
+                }else if(yourType[1]==enemType[0]){
+                    bigText.text ="Победа за вами! \n\""+yourTypeText+" "+yourName+"\" "+yourAttackText+" \""+enemTypeText+" "+enemName+"\""+"\nурон противнику: "+yourAttack
+                    this.knock(cardsArr[YOUR_CARD[0] ],EnemyCard)
+                    gameMem.enemy.hp-=yourAttack
+                }else{
+                    bigText.text ="В этот раз не повезло! \n\""+enemTypeText+" "+enemName+"\" "+enemAttackText+" \""+yourTypeText+" "+yourName+"\""+"\nурон Вам: "+enemAttack
+                    this.knock(EnemyCard,cardsArr[YOUR_CARD[0] ],'enemy')
+                    gameMem.player.hp-=enemAttack
+                }
+// end steps
+                // this.knock(cardsArr[YOUR_CARD[0][1]],ENEMY)
+
+
+            }
+            total=5
+
+        }
+    },
     onDragStart: function(obj) {
 
         if ((tween !== null && tween.isRunning) || obj.scale.x === 1.2)
@@ -298,9 +251,6 @@ var Game = {
         }
         // Phaser.Easing.Elastic.Out
         tween = Game.add.tween(obj.scale).to( { x:scaleRatio+0.2, y:scaleRatio+0.2 }, 100, Phaser.Easing.Linear.None, true);
-    },
-    nextTurn: function (obj) {
-        this.state.start('Game'); 
     },
     randomInteger: function (min, max) {
         var rand = min + Math.random() * (max + 1 - min);
@@ -316,36 +266,49 @@ var Game = {
 
         Card.remove(obj.key,gameMem.player.cards,gameMem.player.cardPlace)
 
+        // cardsArr.forEach(function(item) {
+        //     console.log()
+        //     game.physics.arcade.collide(item,obj);
+        //     if (!game.physics.arcade.overlap(item, obj, console.log('hui2')) ){console.log('hui2')};
+        // }, this);
+
+// пересечения с досками
         game.physics.arcade.collide(obj, card_desc)
-        if (!game.physics.arcade.overlap(obj, card_desc, function() {
-            
+        if (!game.physics.arcade.overlap(obj, card_desc, function() {      
             Card.add(obj.key,gameMem.player.cards,gameMem.player.cardPlace)
             obj.position.copyFrom(card_desc.position); 
             obj.anchor.setTo((gameMem.player.cardPlace[obj.key]-1)-card_desc.anchor.x, card_desc.anchor.y); 
+            console.log("пересечения с доской для карт "+gameMem.player.cardPlace[obj.key])
         }))
-        { 
-            Card.add(obj.key,gameMem.player.cards,gameMem.player.cardPlace)
-            obj.position.copyFrom(card_desc.position); 
-            obj.anchor.setTo((gameMem.player.cardPlace[obj.key]-1)-card_desc.anchor.x, card_desc.anchor.y); 
+        {
+// пересечение с игральной доской
+            game.physics.arcade.collide(obj, game_desc)
+            if (!game.physics.arcade.overlap(obj, game_desc, function() {  
+
+                console.log("пересечения с игральной доской ")          
+                l=gameMem.game.cards.length
+                if(!l){
+                    Card.add(obj.key,gameMem.game.cards,false) 
+                    obj.input.draggable = false;
+                    obj.position.copyFrom(game_desc.position); 
+                    obj.anchor.setTo(game_desc.anchor.x, game_desc.anchor.y); 
+                }
+            }))
+            { 
+                Card.add(obj.key,gameMem.player.cards,gameMem.player.cardPlace)
+                console.log("нет пересечения "+gameMem.player.cardPlace[obj.key])
+                obj.position.copyFrom(card_desc.position); 
+                obj.anchor.setTo((gameMem.player.cardPlace[obj.key]-1)-card_desc.anchor.x, card_desc.anchor.y); 
+            }            
         }
 
-        game.physics.arcade.collide(obj, game_desc)
-        if (!game.physics.arcade.overlap(obj, game_desc, function() {
-
-            l=gameMem.game.cards.length
-            if(!l){
-                Card.add(obj.key,gameMem.game.cards,gameMem.player.cardPlace) 
-                obj.input.draggable = false;
-                obj.position.copyFrom(game_desc.position); 
-                obj.anchor.setTo(game_desc.anchor.x, game_desc.anchor.y); 
-            }
-        }))
-        { }
+        
 
     },
     knock:function(elem,enemy,whose){
     
-
+        game.world.bringToTop(elem)
+        enemy.visible=1
         visible = game.add.tween(elem).to({
             alpha:1
         }, 500, Phaser.Easing.Linear.None, true);
@@ -354,7 +317,6 @@ var Game = {
             scale_tween = game.add.tween(elem.scale).to({
                  x:scaleRatio+0.5, y:scaleRatio+0.5
             }, 500, Phaser.Easing.Linear.None, true);
-            game.world.bringToTop(elem)
                 // obj.position.copyFrom(card_desc.position); 
                 // obj.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y); 
             var tween2 = game.add.tween(elem).to({
@@ -379,37 +341,42 @@ var Game = {
                     tween4.onComplete.add(function() {
                         if(whose!='enemy'){
                             // position
-                            elem.position.copyFrom(0,card_desc.position.y+100); 
-                            // position
-                            
-                            elem.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y); 
-                            elem.input.enableDrag(false, true);                        
+                            // elem.position.copyFrom(0,card_desc.position.y+100);                                                       
+                            // elem.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y);   // position                       
                             Card.remove(elem.key,gameMem.game.cards,gameMem.player.cardPlace)
                             enemy.visible = 0
 
-                			Game.pushNewCard(elem)
+                            if(whose!='double'){
+                                Card.addFirst(elem.key,gameMem.stack.cards)
+                            }
+                            elem.visible=0
                         }else{
-                            enemy.position.copyFrom(0,card_desc.position.y+100); 
-                            enemy.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y); 
-                            enemy.input.enableDrag(false, true);                        
+                            // enemy.position.copyFrom(0,card_desc.position.y+100); 
+                            // enemy.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y);                       
                             Card.remove(enemy.key,gameMem.game.cards,gameMem.player.cardPlace)
-
-                            elem.position.y=EnemyPosition;                   
+                            elem.position.x=EnemyPosition;                   
                             elem.visible = 0
 
-                			Game.pushNewCard(enemy)
-                            // elem.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y); 
+                            Card.addFirst(enemy.key,gameMem.stack.cards)
+                            enemy.visible=0
+                        }   
+                            if(whose!='double'){
+                                Game.pushNewCard()
+                            }
 
-                        }
                             quake.visible = 0
                             quake2.visible = 0
-                        game.world.sendToBack(elem)
-                        game.world.moveUp(elem)
+                            game.world.sendToBack(elem)
+                            game.world.moveUp(elem)
 
-                        if(gameMem.player.hp<=0 || gameMem.enemy.hp<=0){
-                            // LOOSE
-                            game.state.start('WIN'); 
-                        }
+                            if(gameMem.player.hp<=0){
+                                // LOOSE
+                                game.state.start('WIN');
+                                win=false   
+                            }else if(gameMem.enemy.hp<=0){
+                                game.state.start('WIN');  
+                                win=true                           
+                            }
                     })
                 })
             })
@@ -422,14 +389,23 @@ var WIN = {
     preload: function (){},
     create: function (){
         ingame.stop();
-        user.golds+=15
-        user.exp+=15
-        MoSql.set('user',user)
+        salary=15
+        if(win){
+            button = this.add.button(window.innerWidth/2, window.innerHeight/2, 'win', this.inMenu, this);
+            LoadingText = game.add.text(game.world.width / 2, game.world.height / 2, "Победа!\nВаша награда "+salary+" золотых", style);
 
-        LoadingText = game.add.text(game.world.width / 2, game.world.height / 2, "You win (or lose XD)", style);
-        LoadingText.anchor.setTo(0.5, 0.5);
-        button = this.add.button(window.innerWidth/2, window.innerHeight/2, 'blanc', this.inMenu, this);
-        button.anchor.setTo(0.5, 0.5); 
+
+            user.golds+=salary
+            user.exp+=15
+            MoSql.set('user',user)
+        }
+        else{
+            button = this.add.button(window.innerWidth/2, window.innerHeight/2, 'lose', this.inMenu, this);
+            LoadingText = game.add.text(game.world.width / 2, game.world.height / 2, "Неудача", style);
+        }
+        button.anchor.setTo(0.5, 0.5);
+        LoadingText.position.copyFrom(button.position); 
+        LoadingText.anchor.setTo(button.anchor.x, button.anchor.y);
         // LoadingText.inputEnabled = true;
         // LoadingText.events.onInputDown.add(game.state.start('Menu'), this);
 
@@ -443,8 +419,13 @@ var WIN = {
 game.state.add('GameData', GameData, false);
 game.state.add('Preloader', Preloader, false);
 game.state.add('Boot', Boot, false);
-game.state.add('Menu', Menu); 
+
+game.state.add('Menu', Menu);
+game.state.add('Settings', Settings);
+game.state.add('Cards', Cards);
+
+game.state.add('Chest', Chest); 
+game.state.add('Game', Game); 
 game.state.add('WIN', WIN); 
 
-game.state.add('Game', Game); 
 game.state.start('Boot');

@@ -1,6 +1,40 @@
 body,html{margin:auto;}
 
 @font-face {
+  font-family: 'Droid Sans';
+  src: url('assets/droid/DroidSans.ttf'); }
+
+@font-face {
+  font-family: 'Droid Sans';
+  src: url('assets/droid/DroidSans-Bold.ttf');
+  font-weight: bold; }
+
+@font-face {
+  font-family: 'Droid Serif';
+  src: url('assets/droid/DroidSerif-Regular.ttf'); }
+
+@font-face {
+  font-family: 'Droid Serif';
+  src: url('assets/droid/DroidSerif-Italic.ttf');
+  font-style: italic; }
+
+@font-face {
+  font-family: 'Droid Serif';
+  src: url('assets/droid/DroidSerif-Bold.ttf');
+  font-weight: bold; }
+
+@font-face {
+  font-family: 'Droid Serif';
+  src: url('assets/droid/DroidSerif-BoldItalic.ttf');
+  font-weight: bold;
+  font-style: italic; }
+
+@font-face {
+  font-family: 'Droid Sans Mono';
+  src: url('assets/droid/DroidSansMono.ttf'); }
+
+
+@font-face {
 	font-family: "Shark";
 	src: url(sharkcrash.ttf);
 }

@@ -1,7 +1,7 @@
 var game = new Phaser.Game(
     window.innerWidth ,
     window.innerHeight,
-    Phaser.AUTO,
+    Phaser.AUTO,//Phaser.CANVAS
     ''
     // {
     //     preload: preload,
@@ -9,11 +9,12 @@ var game = new Phaser.Game(
     //     update: update
     // }
 );
+
 var style = { font: '50px "Shark"', fill: '#FFFFFF', stroke: '#000000', strokeThickness: 10, align: 'center' };
 var styleG = { font: '25px "Shark"', fill: '#FFFFFF', stroke: '#0a73a2', strokeThickness: 5, align: 'right' };
 var styleGold = { font: '30px "Shark"', fill: '#FFFFFF', stroke: '#cd7c3f', strokeThickness: 5, align: 'right' };
 var styleBig = { font: '20px "Droid Sans"', fill: '#FFFFFF', stroke: '#33251a', strokeThickness: 4, align: 'left' };
-var scaleRatio = window.devicePixelRatio / 3.3;
+var scaleRatio = window.devicePixelRatio / 4;
 // start boot loader
 function fileComplete(progress, cacheKey, success, totalLoaded, totalFiles) {
     //LoadingText.setText(progress + "%  ");
@@ -80,9 +81,8 @@ var Preloader = {
     {
         debuger.point('loadAssets');
         
-            game.load.image('start', './assets/menu/butt3.png');  
-            game.load.image('setting', './assets/menu/butt_sett.png'); 
-            game.load.image('cards', './assets/menu/butt_cards.png'); 
+            game.load.spritesheet('start', './assets/menu/butt3.png', 320, 172);   
+            game.load.spritesheet('butt_in', './assets/menu/butt_in.png', 162, 73);   
             game.load.image('time', './assets/menu/time.png');
             game.load.image('gold', './assets/menu/gold.png');
             game.load.image('switch', './assets/menu/switch.png');
