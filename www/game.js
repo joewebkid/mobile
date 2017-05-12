@@ -4,7 +4,26 @@ ENEMY=[];
 
 var Game = { 
     preload: function ()
-    {        
+    {             
+        gameMem = MoSql.getOrSet('game',{
+            'player':{
+                'cards':user['cards'],
+                'cardPlace':[],
+                'hp':user['hp'],
+            },
+            'stack':{
+                'cards':[]
+            }
+            ,
+            'enemy':{
+                'cards':[],
+                'hp':user['hp'],
+            }
+            ,
+            'game':{
+                'cards':[]
+            }
+        })   
         game.physics.startSystem(Phaser.Physics.ARCADE)
         var margin = 50;
         // and set the world's bounds according to the given margin
@@ -21,6 +40,7 @@ var Game = {
         clash = game.add.audio('clash');
         back_music.stop();
         ingame.play();
+        ingame.volume=settings.volume
 
         bg = this.add.tileSprite(0, 0,game.width,game.height, 'backG');
         
@@ -140,9 +160,10 @@ var Game = {
     nextElem: function(){
         elem=cardsArr[gameMem.stack.cards[gameMem.stack.cards.length-1]]
         elem.visible=1
+        elem.scale={x:scaleRatio/1.5, y:scaleRatio/1.5}
         elem.input.draggable = false;
-        elem.position.x=0,
-        elem.position.y=window.innerHeight
+        elem.position.x=0 + elem.width/2,
+        elem.position.y=window.innerHeight - elem.height/2
         elem.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y);
     },
     pushNewCard: function () 
@@ -156,6 +177,10 @@ var Game = {
         elem.anchor.setTo((gameMem.player.cardPlace[elem.key]-1)-card_desc.anchor.x, card_desc.anchor.y);
         // elem.visible=1
         // elem.position.copyFrom(card_desc.position); 
+        var tween3 = game.add.tween(elem.scale).to({
+            x:scaleRatio, y:scaleRatio
+        }, 200, Phaser.Easing.Bounce.InOut, true);
+
         visible = game.add.tween(elem.position).to({
             x:card_desc.position.x,y:card_desc.position.y
         }, 500, Phaser.Easing.Linear.None, true);
@@ -367,7 +392,7 @@ var WIN = {
         salary=15
         if(win){
             button = this.add.button(window.innerWidth/2, window.innerHeight/2, 'win', this.inMenu, this);
-            LoadingText = game.add.text(game.world.width / 2, game.world.height / 2, "Победа!\nВаша награда "+salary+" золота", style);
+            LoadingText = game.add.text(game.world.width / 2, game.world.height / 2, "Победа!\nВаша награда "+salary+" золотых", style);
 
 
             user.golds+=salary
@@ -396,9 +421,10 @@ game.state.add('Preloader', Preloader, false);
 game.state.add('Boot', Boot, false);
 
 game.state.add('Menu', Menu);
-game.state.add('Settings', Menu);
-game.state.add('Cards', Menu);
+game.state.add('Settings', Settings);
+game.state.add('Cards', Cards);
 
+game.state.add('Chest', Chest); 
 game.state.add('Game', Game); 
 game.state.add('WIN', WIN); 
 

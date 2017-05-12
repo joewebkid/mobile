@@ -61,6 +61,11 @@ var GameData = {
             // user = MoSql.get('user')
             // debuger.info(base) 
         debuger.pointEnd('loadUser');
+
+        settings = MoSql.getOrSet('settings',{
+            'volume':1,
+            'vibration':false
+        })
     },
     create: function () 
     {
@@ -80,6 +85,9 @@ var Preloader = {
             game.load.image('cards', './assets/menu/butt_cards.png'); 
             game.load.image('time', './assets/menu/time.png');
             game.load.image('gold', './assets/menu/gold.png');
+            game.load.image('switch', './assets/menu/switch.png');
+            game.load.image('slider', './assets/menu/slider.png');
+            game.load.spritesheet('chests', 'assets/game/chests.png', 402, 445, 2);
 
             game.load.image('win', './assets/menu/win.png');
             game.load.image('lose', './assets/menu/lose.png');
@@ -122,7 +130,7 @@ var Boot = {
     {
 
         game.load.onFileComplete.add(fileComplete, this);
-
+        backMusicIs=false
         LoadingText = game.add.text(game.world.width / 2, game.world.height / 2, "...", style);
         LoadingText.anchor.setTo(0.5, 0.5);
         LoadingText.scale.setTo(scaleRatio/2, scaleRatio/2);
