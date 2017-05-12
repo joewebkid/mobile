@@ -1,97 +1,3 @@
-
-var Menu = 
-{ 
-    preload: function () 
-    { 
-        gameMem = MoSql.getOrSet('game',{
-            'player':{
-                'cards':user['cards'],
-                'cardPlace':[],
-                'hp':user['hp'],
-            },
-            'stack':{
-                'cards':[]
-            }
-            ,
-            'enemy':{
-                'cards':[],
-                'hp':user['hp'],
-            }
-            ,
-            'game':{
-                'cards':[]
-            }
-        })
-    }, 
-    create: function () 
-    {         
-        Menu.physics.startSystem(Phaser.Physics.ARCADE);
-
-        game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
-        game.scale.startFullScreen(false);
-    
-        back_music = game.add.audio('back');
-        ingame = game.add.audio('ingame');
-        back_music.play();
-        back_music.loopFull(0.6);
-
-        bg = this.add.sprite(0, 0, 'back');
-        he=bg.height
-        bg.height = game.height;
-        bg.width = (bg.height/he)*bg.width;
-
-        var lvl = this.add.sprite(0, 50, 'lvl');
-        lvl.anchor.setTo(0, 0.5);
-        lvl.scale.setTo(scaleRatio/2, scaleRatio/2);
-        lvlT = game.add.text(40, lvl.position.y-5, user.lvl, styleG)
-        lvlT.anchor.setTo(lvl.anchor.x, lvl.anchor.y);
-        lvlT.scale.setTo(scaleRatio/2, scaleRatio/2);
-
-        lvlT = game.add.text(130, lvl.position.y-5, user.exp, styleG)
-        lvlT.anchor.setTo(lvl.anchor.x, lvl.anchor.y);
-        lvlT.scale.setTo(scaleRatio/2, scaleRatio/2);
-
-        
-
-        var gold = this.add.sprite(lvl.width+20,50 , 'gold');
-        gold.anchor.setTo(0, 0.5);
-        gold.scale.setTo(scaleRatio/2, scaleRatio/2);
-        goldT = game.add.text( gold.position.x+130, gold.position.y-5, user.golds, styleGold)
-        goldT.anchor.setTo(gold.anchor.x, gold.anchor.y);
-        goldT.scale.setTo(scaleRatio/2, scaleRatio/2);
-
-        button = this.add.button(window.innerWidth/2, window.innerHeight/2, 'start', this.startGame, this);
-        button.anchor.setTo(0.5, 0.5); 
-
-
-        button.scale.setTo(scaleRatio, scaleRatio);
-
-        setting = this.add.button(window.innerWidth-247, window.innerHeight-121, 'setting', this.setting, this); 
-        setting.scale.setTo(scaleRatio, scaleRatio);
-
-        cards = this.add.button(0, window.innerHeight-121, 'cards', this.cards, this); 
-        cards.scale.setTo(scaleRatio, scaleRatio);
-
-        // buttonText = game.add.text(game.world.width / 2, game.world.height / 2, "Game", style);
-        // buttonText.anchor.setTo(0.5, 0.5);
-    }, 
-    startGame: function () 
-    { 
-        // var tween = Menu.add.tween(button.scale).to({y:game.height - 200},0, Phaser.Easing.Bounce.Out, true);
-        // tween.onComplete.add(function() {})
-        game.state.start('Game'); 
-        
-    } ,
-    setting: function () 
-    { 
-        
-    } ,
-    cards: function () 
-    { 
-        
-    } 
-};
-
 var tween = null;
 cardsArr=[];
 ENEMY=[];
@@ -222,24 +128,44 @@ var Game = {
         
         
     },
+    render: function () 
+    { 
+        var text = timer.duration.toFixed(0);
+        t.text=total
+
+        health_bar.text=gameMem.player.hp
+        health_bar_enemy.text=gameMem.enemy.hp
+    }, 
+
+    nextElem: function(){
+        elem=cardsArr[gameMem.stack.cards[gameMem.stack.cards.length-1]]
+        elem.visible=1
+        elem.input.draggable = false;
+        elem.position.x=0,
+        elem.position.y=window.innerHeight
+        elem.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y);
+    },
     pushNewCard: function () 
     { 
         cardStack=gameMem.stack.cards.pop()
         elem=cardsArr[cardStack]
+        console.log(gameMem.player.cardPlace)
         Card.add(elem.key,gameMem.player.cards,gameMem.player.cardPlace)
+
+        console.log(gameMem.player.cardPlace)
+        elem.anchor.setTo((gameMem.player.cardPlace[elem.key]-1)-card_desc.anchor.x, card_desc.anchor.y);
         // elem.visible=1
         // elem.position.copyFrom(card_desc.position); 
         visible = game.add.tween(elem.position).to({
             x:card_desc.position.x,y:card_desc.position.y
         }, 500, Phaser.Easing.Linear.None, true);
-        game.world.bringToTop(elem)
 
-        elem.anchor.setTo((gameMem.player.cardPlace[elem.key]-1)-card_desc.anchor.x, card_desc.anchor.y); 
-        elem.input.enableDrag(false, true);
-        visible.onComplete.add(function(elem) {
+        visible.onComplete.add(function(elem_pos) {
+            elem.input.enableDrag(false, true); 
             Game.nextElem ()   
         })     
     },
+
     updateCounter: function () {
         if(total!=0){
             total--;
@@ -247,25 +173,26 @@ var Game = {
             l=gameMem.game.cards.length
             YOUR_CARD=gameMem.game.cards
             if(l){
-
-                enemyCardNum=this.randomInteger(1,4)
+// Your card DATA
                 yourName=card_data[YOUR_CARD[0]]['data'].name
                 yourType=card_data[YOUR_CARD[0]]['data'].type
                 yourTypeText=card_data[YOUR_CARD[0]]['data'].type_text
                 yourAttack=card_data[YOUR_CARD[0]]['data'].attack
                 yourAttackText=card_data[YOUR_CARD[0]]['data'].attack_text
-
+// end Your card DATA
+// enemy card DATA
+                enemyCardNum=this.randomInteger(1,4)
                 enemName=card_data['b'+enemyCardNum]['data'].name
                 enemType=card_data['b'+enemyCardNum]['data'].type
                 enemTypeText=card_data['b'+enemyCardNum]['data'].type_text
                 enemAttack=card_data['b'+enemyCardNum]['data'].attack
                 enemAttackText=card_data['b'+enemyCardNum]['data'].attack_text
-
+// end enemy card DATA
                 EnemyCard=ENEMY['b'+enemyCardNum]
                 EnemyCard.visible=1;
 
                 bigText.alpha = 1
-
+// steps for game
                 if(yourType[0]==enemType[0]){
                     bigText.text ="Ничья! \n\""+yourTypeText+" "+yourName+"\" не может победить \""+enemTypeText+" "+enemName+"\""+"\nурон противнику: "+yourAttack
                     this.knock(cardsArr[YOUR_CARD[0] ],EnemyCard,'double')
@@ -282,7 +209,7 @@ var Game = {
                     this.knock(EnemyCard,cardsArr[YOUR_CARD[0] ],'enemy')
                     gameMem.player.hp-=enemAttack
                 }
-
+// end steps
                 // this.knock(cardsArr[YOUR_CARD[0][1]],ENEMY)
 
 
@@ -291,22 +218,6 @@ var Game = {
 
         }
     },
-    nextElem: function(){
-        elem=cardsArr[gameMem.stack.cards[gameMem.stack.cards.length-1]]
-        elem.visible=1
-        elem.input.draggable = false;
-        elem.position.x=0,
-        elem.position.y=window.innerHeight
-        elem.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y);
-    },
-    render: function () 
-    { 
-        var text = timer.duration.toFixed(0);
-        t.text=total
-
-        health_bar.text=gameMem.player.hp
-        health_bar_enemy.text=gameMem.enemy.hp
-    }, 
     onDragStart: function(obj) {
 
         if ((tween !== null && tween.isRunning) || obj.scale.x === 1.2)
@@ -315,9 +226,6 @@ var Game = {
         }
         // Phaser.Easing.Elastic.Out
         tween = Game.add.tween(obj.scale).to( { x:scaleRatio+0.2, y:scaleRatio+0.2 }, 100, Phaser.Easing.Linear.None, true);
-    },
-    nextTurn: function (obj) {
-        this.state.start('Game'); 
     },
     randomInteger: function (min, max) {
         var rand = min + Math.random() * (max + 1 - min);
@@ -339,29 +247,37 @@ var Game = {
         //     if (!game.physics.arcade.overlap(item, obj, console.log('hui2')) ){console.log('hui2')};
         // }, this);
 
+// пересечения с досками
         game.physics.arcade.collide(obj, card_desc)
         if (!game.physics.arcade.overlap(obj, card_desc, function() {      
             Card.add(obj.key,gameMem.player.cards,gameMem.player.cardPlace)
             obj.position.copyFrom(card_desc.position); 
             obj.anchor.setTo((gameMem.player.cardPlace[obj.key]-1)-card_desc.anchor.x, card_desc.anchor.y); 
+            console.log("пересечения с доской для карт "+gameMem.player.cardPlace[obj.key])
         }))
         {
-            Card.add(obj.key,gameMem.player.cards,gameMem.player.cardPlace)
-            obj.position.copyFrom(card_desc.position); 
-            obj.anchor.setTo((gameMem.player.cardPlace[obj.key]-1)-card_desc.anchor.x, card_desc.anchor.y); 
+// пересечение с игральной доской
+            game.physics.arcade.collide(obj, game_desc)
+            if (!game.physics.arcade.overlap(obj, game_desc, function() {  
+
+                console.log("пересечения с игральной доской ")          
+                l=gameMem.game.cards.length
+                if(!l){
+                    Card.add(obj.key,gameMem.game.cards,false) 
+                    obj.input.draggable = false;
+                    obj.position.copyFrom(game_desc.position); 
+                    obj.anchor.setTo(game_desc.anchor.x, game_desc.anchor.y); 
+                }
+            }))
+            { 
+                Card.add(obj.key,gameMem.player.cards,gameMem.player.cardPlace)
+                console.log("нет пересечения "+gameMem.player.cardPlace[obj.key])
+                obj.position.copyFrom(card_desc.position); 
+                obj.anchor.setTo((gameMem.player.cardPlace[obj.key]-1)-card_desc.anchor.x, card_desc.anchor.y); 
+            }            
         }
 
-        game.physics.arcade.collide(obj, game_desc)
-        if (!game.physics.arcade.overlap(obj, game_desc, function() {            
-            l=gameMem.game.cards.length
-            if(!l){
-                Card.add(obj.key,gameMem.game.cards,false) 
-                obj.input.draggable = false;
-                obj.position.copyFrom(game_desc.position); 
-                obj.anchor.setTo(game_desc.anchor.x, game_desc.anchor.y); 
-            }
-        }))
-        { }
+        
 
     },
     knock:function(elem,enemy,whose){
@@ -405,8 +321,9 @@ var Game = {
                             Card.remove(elem.key,gameMem.game.cards,gameMem.player.cardPlace)
                             enemy.visible = 0
 
-
-                            gameMem.stack.cards.unshift(elem.key)
+                            if(whose!='double'){
+                                Card.addFirst(elem.key,gameMem.stack.cards)
+                            }
                             elem.visible=0
                         }else{
                             // enemy.position.copyFrom(0,card_desc.position.y+100); 
@@ -415,7 +332,7 @@ var Game = {
                             elem.position.x=EnemyPosition;                   
                             elem.visible = 0
 
-                            gameMem.stack.cards.unshift(enemy.key)
+                            Card.addFirst(enemy.key,gameMem.stack.cards)
                             enemy.visible=0
                         }   
                             if(whose!='double'){
@@ -425,7 +342,6 @@ var Game = {
                             quake.visible = 0
                             quake2.visible = 0
                             game.world.sendToBack(elem)
-                            game.world.moveUp(elem)
                             game.world.moveUp(elem)
 
                             if(gameMem.player.hp<=0){
@@ -451,7 +367,7 @@ var WIN = {
         salary=15
         if(win){
             button = this.add.button(window.innerWidth/2, window.innerHeight/2, 'win', this.inMenu, this);
-            LoadingText = game.add.text(game.world.width / 2, game.world.height / 2, "You win\nВаша награда "+salary+" золота", style);
+            LoadingText = game.add.text(game.world.width / 2, game.world.height / 2, "Победа!\nВаша награда "+salary+" золота", style);
 
 
             user.golds+=salary
@@ -460,7 +376,7 @@ var WIN = {
         }
         else{
             button = this.add.button(window.innerWidth/2, window.innerHeight/2, 'lose', this.inMenu, this);
-            LoadingText = game.add.text(game.world.width / 2, game.world.height / 2, "You lose ", style);
+            LoadingText = game.add.text(game.world.width / 2, game.world.height / 2, "Неудача", style);
         }
         button.anchor.setTo(0.5, 0.5);
         LoadingText.position.copyFrom(button.position); 
@@ -478,8 +394,12 @@ var WIN = {
 game.state.add('GameData', GameData, false);
 game.state.add('Preloader', Preloader, false);
 game.state.add('Boot', Boot, false);
-game.state.add('Menu', Menu); 
-game.state.add('WIN', WIN); 
+
+game.state.add('Menu', Menu);
+game.state.add('Settings', Menu);
+game.state.add('Cards', Menu);
 
 game.state.add('Game', Game); 
+game.state.add('WIN', WIN); 
+
 game.state.start('Boot');
