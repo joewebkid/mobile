@@ -1,46 +1,86 @@
 {
 	"b1":{
-		"img":"assets/game/cards/dwarf1.png",
+		"img":"assets/game/cards/good/dwarf.png",
 		"data":{
 			"name":"Гном",
 			"attack_text":"бьет киркой",
 			"attack":"1",
 			"health":"0",
 			"type":"wb",
-			"type_text":"Воин"
+			"type_text":"Воин",
+			"rare":"standart"
 		}
 	},
 	"b2":{
-		"img":"assets/game/cards/satir1.png",
+		"img":"assets/game/cards/good/satir.png",
 		"data":{
 			"name":"Сатир",
 			"attack_text":"лягает",
 			"attack":"1",
 			"health":"0",
 			"type":"bm",
-			"type_text":"Зверь"
+			"type_text":"Зверь",
+			"rare":"standart"
 		}
 	},
 	"b3":{
-		"img":"assets/game/cards/lepr1.png",
+		"img":"assets/game/cards/good/lepr.png",
 		"data":{
 			"name":"Лепрекон",
 			"attack_text":"зачаровывает",
 			"attack":"1",
 			"health":"0",
 			"type":"mw",
-			"type_text":"Маг"
+			"type_text":"Маг",
+			"rare":"standart"
 		}
 	},
 	"b4":{
-		"img":"assets/game/cards/bigfoot.png",
+		"img":"assets/game/cards/good/bigfoot.png",
 		"data":{
 			"name":"Бигфут",
 			"attack_text":"давит",
 			"attack":"2",
 			"health":"0",
 			"type":"wb",
-			"type_text":"Воин"
+			"type_text":"Воин",
+			"rare":"unique"
+		}
+	},
+	"b5":{
+		"img":"assets/game/cards/good/viking.png",
+		"data":{
+			"name":"Викинг",
+			"attack_text":"разрубает",
+			"attack":"2",
+			"health":"0",
+			"type":"wb",
+			"type_text":"Воин",
+			"rare":"unique"
+		}
+	},
+	"b6":{
+		"img":"assets/game/cards/good/pirat.png",
+		"data":{
+			"name":"Пират",
+			"attack_text":"пронзает",
+			"attack":"2",
+			"health":"0",
+			"type":"wb",
+			"type_text":"Воин",
+			"rare":"unique"
+		}
+	},
+	"b7":{
+		"img":"assets/game/cards/good/unker.png",
+		"data":{
+			"name":"Юнкер",
+			"attack_text":"протыкает",
+			"attack":"2",
+			"health":"0",
+			"type":"wb",
+			"type_text":"Воин",
+			"rare":"rare"
 		}
 	}
 }

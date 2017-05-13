@@ -60,7 +60,7 @@ var Game = {
             ENEMY[key] = game.add.sprite(window.innerWidth-game_desc.width/2, window.innerHeight/2,key)
             ENEMY[key].anchor.setTo(0.5, 0.5)
             ENEMY[key].visible = 0
-            ENEMY[key].scale.setTo(scaleRatio, scaleRatio);
+            ENEMY[key].scale.setTo(scaleRatio/5.6, scaleRatio/5.6);
         }
         EnemyPosition=ENEMY['b1'].position.x 
 // ENEMY END
@@ -110,7 +110,7 @@ var Game = {
             cardsArr[key].events.onDragStop.add(this.onDragStop, this)
             // cardsArr[key].scale.set(1.1);
             // cardsArr[key].scale.set(1);
-            cardsArr[key].scale.setTo(scaleRatio, scaleRatio);
+            cardsArr[key].scale.setTo(scaleRatio/5.6, scaleRatio/5.6);
 // card mem
 			if(i<=3){
 	            Card.add(cardsArr[key].key,gameMem.player.cards,gameMem.player.cardPlace)
@@ -160,7 +160,7 @@ var Game = {
     nextElem: function(){
         elem=cardsArr[gameMem.stack.cards[gameMem.stack.cards.length-1]]
         elem.visible=1
-        elem.scale={x:scaleRatio/1.5, y:scaleRatio/1.5}
+        elem.scale={x:(scaleRatio/5.6)/1.5, y:(scaleRatio/5.6)/1.5}
         elem.input.draggable = false;
         elem.position.x=0 + elem.width/2,
         elem.position.y=window.innerHeight - elem.height/2
@@ -178,7 +178,7 @@ var Game = {
         // elem.visible=1
         // elem.position.copyFrom(card_desc.position); 
         var tween3 = game.add.tween(elem.scale).to({
-            x:scaleRatio, y:scaleRatio
+            x:(scaleRatio/5.6), y:(scaleRatio/5.6)
         }, 200, Phaser.Easing.Bounce.InOut, true);
 
         visible = game.add.tween(elem.position).to({
@@ -250,7 +250,7 @@ var Game = {
             return;
         }
         // Phaser.Easing.Elastic.Out
-        tween = Game.add.tween(obj.scale).to( { x:scaleRatio+0.2, y:scaleRatio+0.2 }, 100, Phaser.Easing.Linear.None, true);
+        tween = Game.add.tween(obj.scale).to( { x:(scaleRatio+0.2)/5.6, y:(scaleRatio+0.2)/5.6 }, 100, Phaser.Easing.Linear.None, true);
     },
     randomInteger: function (min, max) {
         var rand = min + Math.random() * (max + 1 - min);
@@ -262,7 +262,7 @@ var Game = {
         {
             return;
         }
-        tween = Game.add.tween(obj.scale).to( { x:scaleRatio, y:scaleRatio }, 100, Phaser.Easing.Linear.None, true);
+        tween = Game.add.tween(obj.scale).to( { x:(scaleRatio/5.6), y:(scaleRatio/5.6) }, 100, Phaser.Easing.Linear.None, true);
 
         Card.remove(obj.key,gameMem.player.cards,gameMem.player.cardPlace)
 
@@ -278,14 +278,14 @@ var Game = {
             Card.add(obj.key,gameMem.player.cards,gameMem.player.cardPlace)
             obj.position.copyFrom(card_desc.position); 
             obj.anchor.setTo((gameMem.player.cardPlace[obj.key]-1)-card_desc.anchor.x, card_desc.anchor.y); 
-            console.log("пересечения с доской для карт "+gameMem.player.cardPlace[obj.key])
+            // console.log("пересечения с доской для карт "+gameMem.player.cardPlace[obj.key])
         }))
         {
 // пересечение с игральной доской
             game.physics.arcade.collide(obj, game_desc)
             if (!game.physics.arcade.overlap(obj, game_desc, function() {  
 
-                console.log("пересечения с игральной доской ")          
+                // console.log("пересечения с игральной доской ")          
                 l=gameMem.game.cards.length
                 if(!l){
                     Card.add(obj.key,gameMem.game.cards,false) 
@@ -296,7 +296,7 @@ var Game = {
             }))
             { 
                 Card.add(obj.key,gameMem.player.cards,gameMem.player.cardPlace)
-                console.log("нет пересечения "+gameMem.player.cardPlace[obj.key])
+                // console.log("нет пересечения "+gameMem.player.cardPlace[obj.key])
                 obj.position.copyFrom(card_desc.position); 
                 obj.anchor.setTo((gameMem.player.cardPlace[obj.key]-1)-card_desc.anchor.x, card_desc.anchor.y); 
             }            
@@ -315,7 +315,7 @@ var Game = {
 
         visible.onComplete.add(function(elem) {
             scale_tween = game.add.tween(elem.scale).to({
-                 x:scaleRatio+0.5, y:scaleRatio+0.5
+                 x:(scaleRatio+0.5)/5.6, y:(scaleRatio+0.5)/5.6
             }, 500, Phaser.Easing.Linear.None, true);
                 // obj.position.copyFrom(card_desc.position); 
                 // obj.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y); 
@@ -327,7 +327,7 @@ var Game = {
             tween2.onComplete.add(function(elem) {
 
                 var tween3 = game.add.tween(elem.scale).to({
-                 x:scaleRatio, y:scaleRatio
+                 x:(scaleRatio/5.6), y:(scaleRatio/5.6)
                 }, 200, Phaser.Easing.Bounce.InOut, true);
                 clash.play();
                 tween3.onComplete.add(function() {  

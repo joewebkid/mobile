@@ -48,7 +48,10 @@ var Menu =
         lvlT.anchor.setTo(lvl.anchor.x, lvl.anchor.y);
         lvlT.scale.setTo(scaleRatio/2, scaleRatio/2);
 
-        
+        if(user.chest.days.length!=0){
+            bigText.text="У вас новый сундук"
+            var tween = Menu.add.tween(bigText).to({alpha:1},200, Phaser.Easing.Bounce.In, true);
+        }
 
         var gold = this.add.sprite(lvl.width+20,50 , 'gold');
         gold.anchor.setTo(0, 0.5);

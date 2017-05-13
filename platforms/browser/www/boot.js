@@ -10,11 +10,11 @@ var game = new Phaser.Game(
     // }
 );
 
-var style = { font: '50px "Shark"', fill: '#FFFFFF', stroke: '#000000', strokeThickness: 10, align: 'center' };
-var styleG = { font: '25px "Shark"', fill: '#FFFFFF', stroke: '#0a73a2', strokeThickness: 5, align: 'right' };
-var styleGold = { font: '30px "Shark"', fill: '#FFFFFF', stroke: '#cd7c3f', strokeThickness: 5, align: 'right' };
-var styleBig = { font: '20px "Droid Sans"', fill: '#FFFFFF', stroke: '#33251a', strokeThickness: 4, align: 'left' };
-var scaleRatio = window.devicePixelRatio / 4;
+var style = { font: '50px "Shark"', fill: '#FFFFFF', stroke: '#000000', strokeThickness: 1, align: 'center' };
+var styleG = { font: '50px "Shark"', fill: '#FFFFFF', stroke: '#0a73a2', strokeThickness: 1, align: 'right' };
+var styleGold = { font: '50px "Shark"', fill: '#FFFFFF', stroke: '#cd7c3f', strokeThickness: 1, align: 'right' };
+var styleBig = { font: '50px "Droid Sans"', fill: '#FFFFFF', stroke: '#33251a', strokeThickness: 1, align: 'left' };
+var scaleRatio = window.devicePixelRatio / 1;
 // start boot loader
 function fileComplete(progress, cacheKey, success, totalLoaded, totalFiles) {
     //LoadingText.setText(progress + "%  ");
