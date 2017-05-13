@@ -1,0 +1,17 @@
+{
+	"standart":{
+		
+		// "img":"assets/game/cards/good/dwarf.png",
+		// "data":{
+		// 	"name":"Гном",
+		// 	"attack_text":"бьет киркой",
+		// 	"attack":"1",
+		// 	"health":"0",
+		// 	"type":"wb",
+		// 	"type_text":"Воин",
+		// 	"rare":"standart"
+		// }
+	},
+	"unique":{},
+	"rare":{}
+}
