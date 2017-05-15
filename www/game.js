@@ -489,12 +489,14 @@ var Game = {
 var WIN = { 
     preload: function (){},
     create: function (){
+        if(user.tochest!=0)user.tochest--
+
         ingame.stop();
         salary=15
         if(win){
             button = this.add.button(window.innerWidth/2, window.innerHeight/2, 'win', this.inMenu, this);
             button.scale.setTo(scaleRatio/1.2, scaleRatio/1.2);
-            LoadingText = game.add.text(game.world.width / 2, game.world.height / 2, "Победа!\nВаша награда "+salary+" золотых", style);
+            LoadingText = game.add.text(game.world.width / 2, game.world.height / 2, "Победа!\nВаша награда "+salary+" золотых"+(user.tochest==0?"\nСтандартный сундук":""), style);
             LoadingText.scale.setTo(scaleRatio/2.3, scaleRatio/2.3);
 
             user.golds+=salary

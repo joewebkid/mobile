@@ -89,16 +89,18 @@ var Menu =
         settingText.anchor.setTo(0.5, 0.5);settingText.scale.setTo(scaleRatio/2.3, scaleRatio/2.3); 
 
 
-        bigTextBg=this.add.button(window.innerWidth/8, 0, 'bigTextBg', this.inChest, this);
+        bigTextBg=game.add.sprite(window.innerWidth/8, 0, 'bigTextBg');
         bigTextBg.position.y=window.innerHeight-bigTextBg.height/6
         bigTextBg.anchor.setTo(0.5, 0.5);bigTextBg.scale.setTo(scaleRatio/5, scaleRatio/5);
+        if(user.tochest==0||user.tochest==undefined){
+            chests = this.add.button(0, 0, 'chests', this.inChest, this);chests.position.copyFrom(bigTextBg.position);
+            chests.anchor.setTo(0.5, 0.5);chests.scale.setTo(scaleRatio/7, scaleRatio/7);
 
-        chests = game.add.sprite(0, 0, 'chests');chests.position.copyFrom(bigTextBg.position);
-        chests.anchor.setTo(0.5, 0.5);chests.scale.setTo(scaleRatio/7, scaleRatio/7);
-
-        chestsText = game.add.text(game.world.width / 2, game.world.height / 2, "Сундук", style);
-        chestsText.position.copyFrom(chests.position);chestsText.scale.setTo(scaleRatio/3, scaleRatio/3);
-        chestsText.anchor.setTo(0.5, 2);
+            chestsText = game.add.text(game.world.width / 2, game.world.height / 2, "Сундук", style);
+            chestsText.position.copyFrom(chests.position);chestsText.scale.setTo(scaleRatio/3, scaleRatio/3);
+            chestsText.anchor.setTo(0.5, 2);
+            user.tochest=5
+        }
 
         // settingText = game.add.text(game.world.width / 2, game.world.height / 2, "Сундуки", style);  
         // buttonText = game.add.text(game.world.width / 2, game.world.height / 2, "Game", style);
