@@ -118,7 +118,7 @@ var Menu =
     },
     startGame: function () 
     { 
-        if(cardsLenght>=3)
+        if(cardsLenght>=4)
             game.state.start('Game');
         else{
             bigText.text="У вас\n не достаточно карт,\n для игры"
@@ -169,7 +169,7 @@ var Chest =
     },
     create: function () 
     { 
-        openNum=3
+        openNum=4
         chests = game.add.sprite(window.innerWidth/2, window.innerHeight/2, 'chests');
         chests.anchor.setTo(0.5, 0.5)
         var open = chests.animations.add('open'); 
@@ -200,7 +200,6 @@ var Chest =
                     if(user["cards"][key]!=undefined)user["cards"][key]++
                     else user.cards[key]=1
                     MoSql.set('user',user)
-                console.log(MoSql.get('user'))
                     // game.state.start('Menu'); 
                 }) 
                 // card_data["b"+cardNum]
