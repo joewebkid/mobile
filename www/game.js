@@ -192,8 +192,8 @@ var Game = {
         }
 
         if(curHel_en!=gameMem.enemy.hp){
-            health_full_height=health_full.height*(gameMem.enemy.hp/fullHpEnemy)
-            crop_health_full_en.height=health_full_height
+            health_full_height_en=health_full_en.height*(gameMem.enemy.hp/fullHpEnemy)
+            crop_health_full_en.height=health_full_height_en
             health_full_en.updateCrop();
             curHel_en=gameMem.enemy.hp
         }
