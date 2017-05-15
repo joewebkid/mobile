@@ -68,7 +68,7 @@ var Game = {
         health_full_en = this.add.sprite(window.innerWidth/3,0, 'health_full');
         // health_full.position.y=health_full.height/8
         health_full_en.anchor.setTo(0.5, 0);        
-        crop_health_full_en = new Phaser.Rectangle(0, 0, health_full.width, health_full.height);
+        crop_health_full_en = new Phaser.Rectangle(0, 0, health_full_en.width, health_full_en.height);
 
 
         game_desc = this.add.sprite(0, window.innerHeight/2, 'game_desc');
