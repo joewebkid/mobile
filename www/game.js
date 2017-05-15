@@ -23,15 +23,16 @@ var Game = {
             'game':{
                 'cards':[]
             }
-        })   
+        })  
+        fullHpYour=user['hp'] 
+        fullHpEnemy=user['hp'] 
+
         game.physics.startSystem(Phaser.Physics.ARCADE)
         var margin = 50;
-        // and set the world's bounds according to the given margin
         var x = -margin;
         var y = -margin;
         var w = game.world.width + margin * 2;
         var h = game.world.height + margin * 2;
-        // it's not necessary to increase height, we do it to keep uniformity
         game.world.setBounds(x, y, w, h);
         game.world.camera.position.set(0);
         // 
@@ -49,7 +50,26 @@ var Game = {
         time.position.x=time.position.x-time.width/3;
         time.position.y=time.position.y+time.height/3;
         time.anchor.setTo(0.5, 0.5);
-        time.scale.setTo(scaleRatio, scaleRatio);
+        time.scale.setTo(scaleRatio/2, scaleRatio/2);
+// 
+        health_empty = this.add.sprite(window.innerWidth/3, window.innerHeight, 'health_empty');
+        health_empty.position.y=window.innerHeight-health_empty.height/2
+        health_empty.anchor.setTo(0.5, 0.5);
+
+        health_full = this.add.sprite(window.innerWidth/3, window.innerHeight-health_empty.height, 'health_full');
+        // health_full.position.y=health_full.height/8
+        health_full.anchor.setTo(0.5, 0);        
+        crop_health_full = new Phaser.Rectangle(0, 0, health_full.width, health_full.height);
+// 
+        health_empty_en = this.add.sprite(window.innerWidth/3, 0, 'health_empty');
+        health_empty_en.position.y=health_empty.height/2
+        health_empty_en.anchor.setTo(0.5, 0.5);
+
+        health_full_en = this.add.sprite(window.innerWidth/3,0, 'health_full');
+        // health_full.position.y=health_full.height/8
+        health_full_en.anchor.setTo(0.5, 0);        
+        crop_health_full_en = new Phaser.Rectangle(0, 0, health_full.width, health_full.height);
+
 
         game_desc = this.add.sprite(0, window.innerHeight/2, 'game_desc');
         game_desc.anchor.setTo(0.5, 0.5);
@@ -64,10 +84,16 @@ var Game = {
         }
         EnemyPosition=ENEMY['b1'].position.x 
 // ENEMY END
-        bigText = game.add.text(window.innerWidth/2, 50, "...", styleBig)
+        // bigTextBg = this.add.sprite(window.innerWidth/2, 20, 'bigTextBg');
+        // bigTextBg.position.y=bigTextBg.height/4
+        // bigTextBg.anchor.setTo(0.5, 0.5);
+        // bigTextBg.scale.setTo(scaleRatio/1.1, scaleRatio/2);
+
+        bigText = game.add.text(window.innerWidth/2, 50, "...", style)
         bigText.anchor.setTo(0.5, 0.5);
         bigText.alpha = 0; game.world.bringToTop(bigText)
-        bigText.scale.setTo(scaleRatio, scaleRatio);
+        bigText.scale.setTo(scaleRatio/10, scaleRatio/10);
+        // bigText.scale.setTo(scaleRatio/2.3, scaleRatio/2.3);
 
 // 
 
@@ -101,7 +127,7 @@ var Game = {
         cards = Game.add.group();
         cards.inputEnableChildren = true;
         i=0
-        for (var key in card_data) {
+        for (var key in user['cards']) {
         	i++
             cardsArr[key] = cards.create(100*key[1], 100, key);
             cardsArr[key].input.enableDrag(false, true);
@@ -136,16 +162,41 @@ var Game = {
         timer.start();
 
         // this.add.button(0, 0, 'back', this.inMenu, this);
-        t = game.add.text(0, 0, 30, styleG)
+        t = game.add.text(0, 0, 30, style)
         t.position.copyFrom(time.position);
-        t.anchor.setTo(-0.5, 0.5);
+        t.anchor.setTo(0.5, 0.5);
+        t.scale.setTo(scaleRatio/2.3, scaleRatio/2.3);
 
-        health_bar = game.add.text(0, window.innerHeight-50, 1, styleG)
-        health_bar_enemy = game.add.text(0, 0, 1, styleG)
+        health_bar = game.add.text(0, 0, 1, style)
+        health_bar.scale.setTo(scaleRatio/2.3, scaleRatio/2.3);
+        health_bar.position.copyFrom(health_empty.position)
+        health_bar.anchor.setTo(0.5, 0.5);
+
+        health_bar_enemy = game.add.text(0, 0, 1, style)
+        health_bar_enemy.scale.setTo(scaleRatio/2.3, scaleRatio/2.3);
+        health_bar_enemy.position.copyFrom(health_empty_en.position)
+        health_bar_enemy.anchor.setTo(0.5, 0.5);
+
+        health_full.crop(crop_health_full);
+        health_full_en.crop(crop_health_full_en);
+        curHel=fullHpYour
+        curHel_en=fullHpEnemy
     }, 
     update: function () 
     { 
-        
+        if(curHel!=gameMem.player.hp){
+            health_full_height=health_full.height*(gameMem.player.hp/fullHpYour)
+            crop_health_full.height=health_full_height
+            health_full.updateCrop();
+            curHel=gameMem.player.hp
+        }
+
+        if(curHel_en!=gameMem.enemy.hp){
+            health_full_height=health_full.height*(gameMem.enemy.hp/fullHpEnemy)
+            crop_health_full_en.height=health_full_height
+            health_full_en.updateCrop();
+            curHel_en=gameMem.enemy.hp
+        }
         
     },
     render: function () 
@@ -153,18 +204,20 @@ var Game = {
         var text = timer.duration.toFixed(0);
         t.text=total
 
-        health_bar.text=gameMem.player.hp
-        health_bar_enemy.text=gameMem.enemy.hp
+        health_bar.text=fullHpYour+"/"+gameMem.player.hp
+        health_bar_enemy.text=fullHpEnemy+"/"+gameMem.enemy.hp
     }, 
 
     nextElem: function(){
         elem=cardsArr[gameMem.stack.cards[gameMem.stack.cards.length-1]]
-        elem.visible=1
-        elem.scale={x:(scaleRatio/5.6)/1.5, y:(scaleRatio/5.6)/1.5}
-        elem.input.draggable = false;
-        elem.position.x=0 + elem.width/2,
-        elem.position.y=window.innerHeight - elem.height/2
-        elem.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y);
+        if(elem!=undefined){
+            elem.visible=1
+            elem.scale={x:(scaleRatio/5.6)/1.5, y:(scaleRatio/5.6)/1.5}
+            elem.input.draggable = false;
+            elem.position.x=0 + elem.width/2,
+            elem.position.y=window.innerHeight - elem.height/2
+            elem.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y);
+        }
     },
     pushNewCard: function () 
     { 
@@ -216,23 +269,21 @@ var Game = {
                 EnemyCard=ENEMY['b'+enemyCardNum]
                 EnemyCard.visible=1;
 
-                bigText.alpha = 1
+                // bigText.alpha = 1
 // steps for game
                 if(yourType[0]==enemType[0]){
-                    bigText.text ="Ничья! \n\""+yourTypeText+" "+yourName+"\" не может победить \""+enemTypeText+" "+enemName+"\""+"\nурон противнику: "+yourAttack
-                    this.knock(cardsArr[YOUR_CARD[0] ],EnemyCard,'double')
-                    this.knock(EnemyCard,cardsArr[YOUR_CARD[0] ],'enemy')
-
-                    gameMem.player.hp-=enemAttack
-                    gameMem.enemy.hp-=yourAttack
+                    // bigText.text ="Ничья! \n\""+yourTypeText+" "+yourName+"\" не может победить \""+enemTypeText+" "+enemName+"\""+"\nурон противнику: "+yourAttack
+                    this.knock(cardsArr[YOUR_CARD[0] ],EnemyCard,'double',enemAttack)
+                    this.knock(EnemyCard,cardsArr[YOUR_CARD[0] ],'enemy',yourAttack)
+                        
                 }else if(yourType[1]==enemType[0]){
-                    bigText.text ="Победа за вами! \n\""+yourTypeText+" "+yourName+"\" "+yourAttackText+" \""+enemTypeText+" "+enemName+"\""+"\nурон противнику: "+yourAttack
-                    this.knock(cardsArr[YOUR_CARD[0] ],EnemyCard)
-                    gameMem.enemy.hp-=yourAttack
+                    // bigText.text ="Победа за вами! \n\""+yourTypeText+" "+yourName+"\" "+yourAttackText+" \""+enemTypeText+" "+enemName+"\""+"\nурон противнику: "+yourAttack
+                    this.knock(cardsArr[YOUR_CARD[0] ],EnemyCard,false,yourAttack)
+                        
                 }else{
-                    bigText.text ="В этот раз не повезло! \n\""+enemTypeText+" "+enemName+"\" "+enemAttackText+" \""+yourTypeText+" "+yourName+"\""+"\nурон Вам: "+enemAttack
-                    this.knock(EnemyCard,cardsArr[YOUR_CARD[0] ],'enemy')
-                    gameMem.player.hp-=enemAttack
+                    // bigText.text ="В этот раз не повезло! \n\""+enemTypeText+" "+enemName+"\" "+enemAttackText+" \""+yourTypeText+" "+yourName+"\""+"\nурон Вам: "+enemAttack
+                    this.knock(EnemyCard,cardsArr[YOUR_CARD[0] ],'enemy',enemAttack)
+                        
                 }
 // end steps
                 // this.knock(cardsArr[YOUR_CARD[0][1]],ENEMY)
@@ -305,7 +356,7 @@ var Game = {
         
 
     },
-    knock:function(elem,enemy,whose){
+    knock:function(elem,enemy,whose,attack){
     
         game.world.bringToTop(elem)
         enemy.visible=1
@@ -350,6 +401,7 @@ var Game = {
                                 Card.addFirst(elem.key,gameMem.stack.cards)
                             }
                             elem.visible=0
+                            gameMem.enemy.hp-=attack
                         }else{
                             // enemy.position.copyFrom(0,card_desc.position.y+100); 
                             // enemy.anchor.setTo(card_desc.anchor.x, card_desc.anchor.y);                       
@@ -359,6 +411,7 @@ var Game = {
 
                             Card.addFirst(enemy.key,gameMem.stack.cards)
                             enemy.visible=0
+                            gameMem.player.hp-=attack
                         }   
                             if(whose!='double'){
                                 Game.pushNewCard()
@@ -377,6 +430,7 @@ var Game = {
                                 game.state.start('WIN');  
                                 win=true                           
                             }
+                            return true
                     })
                 })
             })
@@ -392,8 +446,9 @@ var WIN = {
         salary=15
         if(win){
             button = this.add.button(window.innerWidth/2, window.innerHeight/2, 'win', this.inMenu, this);
+            button.scale.setTo(scaleRatio/1.2, scaleRatio/1.2);
             LoadingText = game.add.text(game.world.width / 2, game.world.height / 2, "Победа!\nВаша награда "+salary+" золотых", style);
-
+            LoadingText.scale.setTo(scaleRatio/2.3, scaleRatio/2.3);
 
             user.golds+=salary
             user.exp+=15
@@ -401,7 +456,9 @@ var WIN = {
         }
         else{
             button = this.add.button(window.innerWidth/2, window.innerHeight/2, 'lose', this.inMenu, this);
+            button.scale.setTo(scaleRatio/1.2, scaleRatio/1.2);
             LoadingText = game.add.text(game.world.width / 2, game.world.height / 2, "Неудача", style);
+            LoadingText.scale.setTo(scaleRatio/2.3, scaleRatio/2.3);
         }
         button.anchor.setTo(0.5, 0.5);
         LoadingText.position.copyFrom(button.position); 

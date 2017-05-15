@@ -10,34 +10,28 @@ var game = new Phaser.Game(
     // }
 );
 
-var style = { font: '50px "Shark"', fill: '#FFFFFF', stroke: '#000000', strokeThickness: 1, align: 'center' };
+var style = { font: '45px "Shark"', fill: '#FFFFFF', stroke: '#000000', strokeThickness: 0, align: 'center' };
 var styleG = { font: '50px "Shark"', fill: '#FFFFFF', stroke: '#0a73a2', strokeThickness: 1, align: 'right' };
 var styleGold = { font: '50px "Shark"', fill: '#FFFFFF', stroke: '#cd7c3f', strokeThickness: 1, align: 'right' };
-var styleBig = { font: '50px "Droid Sans"', fill: '#FFFFFF', stroke: '#33251a', strokeThickness: 1, align: 'left' };
+var styleBig = { font: '50px "Droid Sans"', fill: '#FFFFFF', stroke: '#33251a', strokeThickness: 10, align: 'center' };
 var scaleRatio = window.devicePixelRatio / 1;
 // start boot loader
 function fileComplete(progress, cacheKey, success, totalLoaded, totalFiles) {
-    //LoadingText.setText(progress + "%  ");
+
+    var loader_inWidth = game.cache.getImage('loader_in').width;
     
+    var loader_full = game.add.sprite((game.width/2) - (loader_inWidth/2),game.height/2,"loader_full");
     
-    loader_in = game.add.sprite(game.width/2,game.height/2,"loader_in");
-    loader_full = game.add.sprite(game.width/2,game.height/2,"loader_full");    
-    loader_in.anchor.setTo(0.5,0.5);
-        loader_in.scale.setTo(scaleRatio/5, scaleRatio/5);
-    loader_full.anchor.setTo(0.5,0.5);
-        loader_in.scale.setTo(scaleRatio/5, scaleRatio/5);
-    
-    this.load.setPreloadSprite(loader_in,1);
+    //this.load.setPreloadSprite(loader_in,0);
     this.load.setPreloadSprite(loader_full,0);
     
-    
-    
+    //loader_in.anchor.setTo(0.5,0.5);
+    loader_full.anchor.setTo(0,0.5);
     
     var txt = LoadingText.setText(progress + "%  ");
     game.world.bringToTop(txt)
     
     
-    // console.log(progress);
     
     // LoadingText.setText(cacheKey+" Complete: " + progress + "%  ");
     // LoadingText.setText("File Complete: " + progress + "% - " + totalLoaded + " out of " + totalFiles);
@@ -84,9 +78,13 @@ var Preloader = {
             game.load.spritesheet('start', './assets/menu/butt3.png', 320, 172);   
             game.load.spritesheet('butt_in', './assets/menu/butt_in.png', 162, 73);   
             game.load.image('time', './assets/menu/time.png');
+            game.load.image('menu', './assets/menu/menu.png');
             game.load.image('gold', './assets/menu/gold.png');
             game.load.image('switch', './assets/menu/switch.png');
             game.load.image('slider', './assets/menu/slider.png');
+            game.load.image('bigTextBg', './assets/menu/bigText.png');
+            game.load.image('health_empty', './assets/menu/health_empty.png');
+            game.load.image('health_full', './assets/menu/health_full.png');
             game.load.spritesheet('chests', 'assets/game/chests.png', 402, 445, 2);
 
             game.load.image('win', './assets/menu/win.png');
@@ -115,6 +113,8 @@ var Preloader = {
     create: function () 
     { 
 
+        var loader_in = game.add.sprite(game.world.width / 2, game.world.height / 2,"loader_in")
+        loader_in.anchor.setTo(0.5,0.5);
         game.load.onFileComplete.add(fileComplete, this);
         game.state.start('GameData', false, false);
     }
@@ -129,12 +129,15 @@ var Boot = {
     create: function () 
     {
 
+        var loader_in = game.add.sprite(game.world.width / 2, game.world.height / 2,"loader_in")
+        loader_in.anchor.setTo(0.5,0.5);
         game.load.onFileComplete.add(fileComplete, this);
+
         backMusicIs=false
         LoadingText = game.add.text(game.world.width / 2, game.world.height / 2, "...", style);
         LoadingText.anchor.setTo(0.5, 0.5);
-        LoadingText.scale.setTo(scaleRatio/2, scaleRatio/2);
-        
+        LoadingText.scale.setTo(scaleRatio/2.3, scaleRatio/2.3);
+
         game.state.start('Preloader', false, false);
     }
 

@@ -1,9 +1,9 @@
 {
 	"hash":"123456",
-	"cards": [],
+	"cards": {},
 	"hp":5,
 	"lvl":1,
-	"gold":0,
+	"golds":0,
 	"exp":0,
 	"chests":{
 		"days":{

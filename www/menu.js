@@ -1,4 +1,4 @@
-
+chest_rare=false
 var Menu = 
 { 
     preload: function () 
@@ -30,65 +30,103 @@ var Menu =
         bg.width = (bg.height/he)*bg.width;
         bg.anchor.x=bg.anchor.x+0.1
 
+        menu = this.add.sprite(window.innerWidth/2, window.innerHeight/2, 'menu');
+        menu.anchor.setTo(0.5, 0.5);
+        menu.scale.setTo(scaleRatio, scaleRatio);
+
+
+        // chests.animations.play('open', 20, false);
+        var lvl = this.add.sprite(0, 0, 'lvl');
+        lvl.position.x=lvl.width/2
+        lvl.position.y=lvl.height/2-10
+        lvl.anchor.setTo(0.5, 0.5);
+        lvl.scale.setTo(scaleRatio/2, scaleRatio/2);
+
+        lvlText = game.add.text(0,0, user.lvl, style)
+        lvlText.anchor.setTo(0.5, 0.5);
+        lvlText.position.x=lvl.position.x-lvl.width/2+30
+        lvlText.position.y=lvl.position.y-5
+        lvlText.scale.setTo(scaleRatio/2.3, scaleRatio/2.3);
+
+        lvlTextExp = game.add.text(130, lvl.position.y-5, user.exp, style)
+        lvlTextExp.position.copyFrom({x:lvl.position.x+10,y:lvl.position.y-5});
+        lvlTextExp.anchor.setTo(lvl.anchor.x, lvl.anchor.y);
+        lvlTextExp.scale.setTo(scaleRatio/2.3, scaleRatio/2.3);
+
+        // if(user.chest.days.length!=0){
+        //     bigText.text="У вас новый сундук"
+        //     var tween = Menu.add.tween(bigText).to({alpha:1},200, Phaser.Easing.Bounce.In, true);
+        // }
+        var gold = this.add.sprite(lvl.position.x+lvl.width+20,50 , 'gold');
+        gold.anchor.setTo(0.5, 0.5);
+        gold.scale.setTo(scaleRatio/2, scaleRatio/2);
+        goldText = game.add.text( 0, 0, user.golds?user.golds:0, style)
+        goldText.position.copyFrom(gold.position);
+        goldText.anchor.setTo(0.5, 0.5);goldText.scale.setTo(scaleRatio/2.3, scaleRatio/2.3); 
+
+// кнопка START
+        button = this.add.button(window.innerWidth/2, window.innerHeight/2.2, 'butt_in', this.startGame, this,2,2,1,1);
+        button.scale.setTo(scaleRatio/1.2, scaleRatio/1.2); 
+        button.anchor.setTo(0.5, 0.5);
+        buttonText = game.add.text(game.world.width / 2, game.world.height / 2, "Играть", style);        
+        buttonText.position.copyFrom(button.position);
+        buttonText.anchor.setTo(0.5, 0.5);buttonText.scale.setTo(scaleRatio/2.3, scaleRatio/2.3); 
+
+// кнопка настройки
+        cards = this.add.button(window.innerWidth/2, window.innerHeight/1.82, 'butt_in', this.cards, this,2,2,1,1); 
+        cards.scale.setTo(scaleRatio/1.2, scaleRatio/1.2);       
+        cards.anchor.setTo(0.5, 0.5);
+        cardsText = game.add.text(game.world.width / 2, game.world.height / 2, "Карты", style);        
+        cardsText.position.copyFrom(cards.position);
+        cardsText.anchor.setTo(0.5, 0.5);cardsText.scale.setTo(scaleRatio/2.3, scaleRatio/2.3); 
+
+// кнопка настройки
+        setting = this.add.button(window.innerWidth/2, window.innerHeight/1.55, 'butt_in', this.setting, this,2,2,1,1); 
+        setting.scale.setTo(scaleRatio/1.2, scaleRatio/1.2);        
+        setting.anchor.setTo(0.5, 0.5);
+        settingText = game.add.text(game.world.width / 2, game.world.height / 2, "Настройки", style);        
+        settingText.position.copyFrom(setting.position);
+        settingText.anchor.setTo(0.5, 0.5);settingText.scale.setTo(scaleRatio/2.3, scaleRatio/2.3); 
+
+
+        bigTextBg=this.add.button(window.innerWidth/8, 0, 'bigTextBg', this.inChest, this);
+        bigTextBg.position.y=window.innerHeight-bigTextBg.height/6
+        bigTextBg.anchor.setTo(0.5, 0.5);bigTextBg.scale.setTo(scaleRatio/5, scaleRatio/5);
+
+        chests = game.add.sprite(0, 0, 'chests');chests.position.copyFrom(bigTextBg.position);
+        chests.anchor.setTo(0.5, 0.5);chests.scale.setTo(scaleRatio/7, scaleRatio/7);
+
+        chestsText = game.add.text(game.world.width / 2, game.world.height / 2, "Сундук", style);
+        chestsText.position.copyFrom(chests.position);chestsText.scale.setTo(scaleRatio/3, scaleRatio/3);
+        chestsText.anchor.setTo(0.5, 2);
+
+        // settingText = game.add.text(game.world.width / 2, game.world.height / 2, "Сундуки", style);  
+        // buttonText = game.add.text(game.world.width / 2, game.world.height / 2, "Game", style);
+        // buttonText.anchor.setTo(0.5, 0.5);
+
+        // chestButton=this.add.button(window.innerWidth/2, window.innerHeight/1.6, 'chests', this.inChest, this); 
+        // chestButton.scale.setTo(scaleRatio/4, scaleRatio/4);
+
+        // ingame.mute = true;
+
         bigText = game.add.text(window.innerWidth/2, window.innerHeight/3, "...", styleBig)
         bigText.anchor.setTo(0.5, 0.5);
         bigText.alpha = 0; game.world.bringToTop(bigText)
         bigText.scale.setTo(scaleRatio, scaleRatio);
 
-
-        // chests.animations.play('open', 20, false);
-        var lvl = this.add.sprite(0, 50, 'lvl');
-        lvl.anchor.setTo(0, 0.5);
-        lvl.scale.setTo(scaleRatio/2, scaleRatio/2);
-        lvlT = game.add.text(40, lvl.position.y-5, user.lvl, styleG)
-        lvlT.anchor.setTo(lvl.anchor.x, lvl.anchor.y);
-        lvlT.scale.setTo(scaleRatio/2, scaleRatio/2);
-
-        lvlT = game.add.text(130, lvl.position.y-5, user.exp, styleG)
-        lvlT.anchor.setTo(lvl.anchor.x, lvl.anchor.y);
-        lvlT.scale.setTo(scaleRatio/2, scaleRatio/2);
-
-        if(user.chest.days.length!=0){
-            bigText.text="У вас новый сундук"
-            var tween = Menu.add.tween(bigText).to({alpha:1},200, Phaser.Easing.Bounce.In, true);
-        }
-
-        var gold = this.add.sprite(lvl.width+20,50 , 'gold');
-        gold.anchor.setTo(0, 0.5);
-        gold.scale.setTo(scaleRatio/2, scaleRatio/2);
-        goldT = game.add.text( gold.position.x+130, gold.position.y-5, user.golds, styleGold)
-        goldT.anchor.setTo(gold.anchor.x, gold.anchor.y);
-        goldT.scale.setTo(scaleRatio/2, scaleRatio/2);
-
-        button = this.add.button(window.innerWidth/2, window.innerHeight/2, 'start', this.startGame, this,2,2,1,1);
-        button.anchor.setTo(0.5, 0.5); 
-
-
-        button.scale.setTo(scaleRatio, scaleRatio);
-
-        setting = this.add.button(window.innerWidth, window.innerHeight, 'butt_in', this.setting, this,2,2,1,1); 
-        setting.scale.setTo(scaleRatio, scaleRatio);
-        setting.position.x=setting.position.x-setting.width
-        setting.position.y=setting.position.y-setting.width
-
-        cards = this.add.button(0, window.innerHeight, 'butt_in', this.cards, this,2,2,2,2); 
-        cards.scale.setTo(scaleRatio, scaleRatio);
-
-        // buttonText = game.add.text(game.world.width / 2, game.world.height / 2, "Game", style);
-        // buttonText.anchor.setTo(0.5, 0.5);
-
-        chestButton=this.add.button(window.innerWidth/2, window.innerHeight/1.6, 'chests', this.inChest, this); 
-        chestButton.scale.setTo(scaleRatio/4, scaleRatio/4);
-
-        // ingame.mute = true;
+        cardsLenght=0;for (var key in user["cards"]) {cardsLenght++}
     },
     startGame: function () 
     { 
-        if(user.cards.length>=0)
+        if(cardsLenght>=3)
             game.state.start('Game');
         else{
-            bigText.text="У вас не достаточно карт, для игры"
-            var tween = Menu.add.tween(bigText).to({alpha:1},200, Phaser.Easing.Bounce.In, true);
+            bigText.text="У вас\n не достаточно карт,\n для игры"
+            var tween2 = game.add.tween(bigText).to({alpha:1},100, Phaser.Easing.Linear.None, true);
+            var tween = game.add.tween(bigText).to({visible:1},2200, Phaser.Easing.Linear.None, true);
+            tween.onComplete.add(function() {
+                tween = game.add.tween(bigText).to({alpha:0},1000, Phaser.Easing.Linear.None, true); 
+            })
         }
         
     } ,
@@ -131,22 +169,51 @@ var Chest =
     },
     create: function () 
     { 
+        openNum=3
         chests = game.add.sprite(window.innerWidth/2, window.innerHeight/2, 'chests');
+        chests.anchor.setTo(0.5, 0.5)
         var open = chests.animations.add('open'); 
-        open.onComplete.add(this.inMenu,this)      
+        // open.onComplete.add(this.inMenu,this)      
         chests.scale.setTo(scaleRatio/2, scaleRatio/2);
         game.input.onTap.add(this.open, this);
     }, 
-    open: function (pointer, doubleTap) 
+    open: function () 
     { 
-        if (doubleTap)
-        {
-        }
-        else
-        {
-            
+        if(openNum!=0){
             chests.animations.play('open', 20, false);
+            if(chest_rare==false||chest_rare=="standart"){
+                if(firstPlay){cardNum=this.randomInteger(1,7);firstPlay=false}
+                else{cardNum=openNum+1}
+                key="b"+cardNum
+                newCard = game.add.sprite(window.innerWidth/2, window.innerHeight/2,key)
+                newCard.anchor.setTo(0.5, 0.5);
+                newCard.scale.setTo(scaleRatio/8.3, scaleRatio/8.3);
+                newCard.alpha=0
+                var tween = game.add.tween(newCard).to({
+                    alpha:1
+                }, 600, Phaser.Easing.Linear.None, true);
+                var tween = game.add.tween(newCard.scale).to({
+                    x:scaleRatio/2.3, y:scaleRatio/2.3
+                }, 600, Phaser.Easing.Linear.None, true);
+
+                tween.onComplete.add(function() {
+                    if(user["cards"][key]!=undefined)user["cards"][key]++
+                    else user.cards[key]=1
+                    MoSql.set('user',user)
+                console.log(MoSql.get('user'))
+                    // game.state.start('Menu'); 
+                }) 
+                // card_data["b"+cardNum]
+            }
+            openNum--
+        }else{
+            game.state.start('Menu'); 
         }
+    },
+    randomInteger: function (min, max) {
+        var rand = min + Math.random() * (max + 1 - min);
+        rand = Math.floor(rand);
+        return rand;
     },
     inMenu: function () 
     { 
@@ -173,11 +240,23 @@ var Settings =
         bg.width = (bg.height/he)*bg.width;
         bg.anchor={
             x:0.2, y:bg.anchor.y
-        }
+        }        
+
+        menu = this.add.sprite(window.innerWidth/2, window.innerHeight/2, 'menu');
+        menu.anchor.setTo(0.5, 0.5);
+        menu.scale.setTo(scaleRatio, scaleRatio);
 
         slider = this.add.sprite(window.innerWidth/2,window.innerHeight/2 , 'slider');
         slider.scale.setTo(scaleRatio, scaleRatio);
         slider.anchor.setTo(0, 0);
+        slider.position.x=menu.position.x-slider.width/1.9
+        slider.position.y=menu.position.y
+
+
+        sliderText = game.add.text(game.world.width / 2, game.world.height / 2, "Громкость", style);
+        sliderText.position.copyFrom(slider.position);sliderText.scale.setTo(scaleRatio/2, scaleRatio/2);
+        sliderText.anchor.setTo(0, 2);
+
         switchA = game.add.sprite(window.innerWidth/2, window.innerHeight/2,'switch')        
         switchA.position.copyFrom(slider.position); 
         switchA.anchor.setTo(slider.anchor.x, slider.anchor.y); 
@@ -231,14 +310,29 @@ var Cards =
     },    
     create: function () 
     {
+        user_cards=[]
         bg = this.add.sprite(0, 0, 'back');
         he=bg.height
         bg.height = game.height;
         bg.width = (bg.height/he)*bg.width;
         cards = this.add.button(0, window.innerHeight-121, 'butt_in', this.inMenu, this); 
         cards.scale.setTo(scaleRatio, scaleRatio);
-
-
+        i=0
+        for (var key in user["cards"]) {
+            string=(i>2?(i/5-(i%5)/5):0)
+            user_cards[key] = this.add.button(window.innerWidth/5*((i-5*string)) ,he*string , key, this.info, this);
+            wi=user_cards[key].width
+            user_cards[key].width=window.innerWidth/5
+            user_cards[key].height = (user_cards[key].width/wi)*user_cards[key].height;
+            he=user_cards[key].height
+            //user_cards[key].scale.setTo(scaleRatio, scaleRatio);
+            user_cards[key].anchor.setTo(0, 0);
+            i++
+        }
+    },
+    info: function (obj) 
+    { 
+        console.log(obj.key)
     },
     inMenu: function () 
     { 
