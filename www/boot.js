@@ -61,6 +61,9 @@ var GameData = {
             'volume':1,
             'vibration':false
         })
+
+        if(MoSql.get('game'))
+            MoSql.delete('game')
     },
     create: function () 
     {
