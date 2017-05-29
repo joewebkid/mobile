@@ -316,8 +316,9 @@ var Cards =
         he=bg.height
         bg.height = game.height;
         bg.width = (bg.height/he)*bg.width;
-        cards = this.add.button(0, window.innerHeight-121, 'butt_in', this.inMenu, this); 
+        cards = this.add.button(window.innerWidth/2, window.innerHeight-121, 'butt_in', this.inMenu, this); 
         cards.scale.setTo(scaleRatio, scaleRatio);
+
         i=0
         for (var key in user["cards"]) {
             string=(i>2?(i/5-(i%5)/5):0)
@@ -328,6 +329,25 @@ var Cards =
             he=user_cards[key].height
             //user_cards[key].scale.setTo(scaleRatio, scaleRatio);
             user_cards[key].anchor.setTo(0, 0);
+
+            var style2 = { font: '32px "Shark"',  fill: '#333333', wordWrap: true, wordWrapWidth: user_cards[key].width, align: "left" };
+            var margin = 30;
+
+            cardsArrText[key] = game.add.text(user_cards[key].position.x, user_cards[key].position.y, card_data[key]['data'].attack, style2);
+            cardsArrText[key].anchor.set(0,0);
+
+            cardsArrText2[key] = game.add.text(user_cards[key].position.x, user_cards[key].position.y, card_data[key]['data'].health, style2);
+            cardsArrText2[key].anchor.set(0,0);
+
+            cardsArrText3[key] = game.add.text(user_cards[key].position.x+user_cards[key].width/3, user_cards[key].position.y+user_cards[key].height/1.15, user["cards"][key], style2);
+            cardsArrText3[key].anchor.set(0,0);
+
+            cardsArrText[key].x = cardsArrText[key].x-cardsArrText[key].width/2+margin;
+            cardsArrText[key].y = cardsArrText[key].y-cardsArrText[key].height/2+margin*1.5;
+
+            cardsArrText2[key].x = cardsArrText2[key].x+cardsArrText2[key].width/2-cardsArrText2[key].width-margin;
+            cardsArrText2[key].y = cardsArrText2[key].y-cardsArrText2[key].height/2+margin*1.5;
+
             i++
         }
     },

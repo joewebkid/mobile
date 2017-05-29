@@ -1,8 +1,9 @@
 var tween = null;
 cardsArr=[];
-cardsArrText=[];cardsArrText2=[];
+cardsArrText=[];cardsArrText2=[];cardsArrText3=[];
 cardsArrWidth=[]
 ENEMY=[];
+ENEMYText=[];ENEMYText2=[];
 
 var Game = { 
     preload: function ()
@@ -79,11 +80,22 @@ var Game = {
 		game_desc.position.x=game_desc.width/3
         game_desc.scale.setTo(scaleRatio, scaleRatio);
 // ENEMY
-        for (var key in card_data) {
+        for (var key in user['cards']) {
             ENEMY[key] = game.add.sprite(window.innerWidth-game_desc.width/2, window.innerHeight/2,key)
             ENEMY[key].anchor.setTo(0.5, 0.5)
             ENEMY[key].visible = 0
             ENEMY[key].scale.setTo(scaleRatio/5.6, scaleRatio/5.6);
+
+
+            var style2 = { font: '32px "Shark"',  fill: '#333333', wordWrap: true, wordWrapWidth: ENEMY[key].width, align: "left" };
+            ENEMYText[key] = game.add.text(ENEMY[key].position.x, ENEMY[key].position.y, card_data[key]['data'].attack, style2);
+            ENEMYText[key].anchor.set(0,0);
+            ENEMYText[key].visible = 0
+
+            ENEMYText2[key] = game.add.text(ENEMY[key].position.x, ENEMY[key].position.y, card_data[key]['data'].health, style2);
+            ENEMYText2[key].anchor.set(0,0);
+            ENEMYText2[key].visible = 0
+
             // var style2 = { font: '32px "Shark"', fill: "#ff0044", wordWrap: true, wordWrapWidth: ENEMY[key].width, align: "center", backgroundColor: "#ffff00" };
             // text = game.add.text(0, 0, card_data[key]['data'].attack, style2);
         }
@@ -168,6 +180,10 @@ var Game = {
             cardsArrText2[key].anchor.set(0,0);
             cards.add(cardsArrText2[key])
             game.physics.enable(cardsArrText2[key], Phaser.Physics.ARCADE);
+            if(i>3){
+                cardsArrText2[key].visible=0
+                cardsArrText[key].visible=0
+            }
             
         }
         this.nextElem ()
@@ -198,25 +214,33 @@ var Game = {
 
         health_full.crop(crop_health_full);
         health_full_en.crop(crop_health_full_en);
-        curHel=fullHpYour
-        curHel_en=fullHpEnemy
+        curHel=0
+        curHel_en=0
     }, 
     update: function () 
     { 
         for (var key in user['cards']) {
-            cardsArrText[key].x = cardsArr[key].x-cardsArr[key].width/2+5;
-            cardsArrText[key].y = cardsArr[key].y-cardsArr[key].height/2+2;
+            YOUR_CARD=cardsArr[key]
+            margin=5
+            cardsArrText[key].x = YOUR_CARD.x-YOUR_CARD.width/2+margin*1.5;
+            cardsArrText[key].y = YOUR_CARD.y-YOUR_CARD.height/2+margin;
             cards.add(cardsArrText[key])
 
-            cardsArrText2[key].x = cardsArr[key].x+cardsArr[key].width/2-cardsArrText2[key].width-5;
-            cardsArrText2[key].y = cardsArr[key].y-cardsArr[key].height/2+2;
+            cardsArrText2[key].x = YOUR_CARD.x+YOUR_CARD.width/2-cardsArrText2[key].width-margin*1.5;
+            cardsArrText2[key].y = YOUR_CARD.y-YOUR_CARD.height/2+margin;
             cards.add(cardsArrText2[key])
+
+            ENEMYText[key].x = ENEMY[key].x-ENEMY[key].width/2+5;
+            ENEMYText[key].y = ENEMY[key].y-ENEMY[key].height/2+2;
+
+            ENEMYText2[key].x = ENEMY[key].x+ENEMY[key].width/2-ENEMYText2[key].width-5;
+            ENEMYText2[key].y = ENEMY[key].y-ENEMY[key].height/2+2;
             // cardsArrText[key].scale=cardsArr[key].scale
         }
 
         if(curHel!=gameMem.player.hp){
 
-            health_bar.text=fullHpYour+"/"+gameMem.player.hp
+            health_bar.text=gameMem.player.hp+"/"+fullHpYour
             health_full_height=health_full.height*(gameMem.player.hp/fullHpYour)
             crop_health_full.height=health_full_height
             health_full.updateCrop();
@@ -224,7 +248,7 @@ var Game = {
         }
 
         if(curHel_en!=gameMem.enemy.hp){
-            health_bar_enemy.text=fullHpEnemy+"/"+gameMem.enemy.hp
+            health_bar_enemy.text=gameMem.enemy.hp+"/"+fullHpEnemy
             health_full_height_en=health_full_en.height*(gameMem.enemy.hp/fullHpEnemy)
             crop_health_full_en.height=health_full_height_en
             health_full_en.updateCrop();
@@ -243,9 +267,13 @@ var Game = {
         elem=cardsArr[gameMem.stack.cards[gameMem.stack.cards.length-1]]
         // if(elem!=undefined){
             elem.visible=1
-            cardsArrText[elem.key].visible
-            cardsArrText2[elem.key].visible
+            cardsArrText[elem.key].visible=1
+            cardsArrText2[elem.key].visible=1
+
+            cardsArrText[elem.key].scale={x:scaleRatio/1.5, y:scaleRatio/1.5}
+            cardsArrText2[elem.key].scale={x:scaleRatio/1.5, y:scaleRatio/1.5}
             elem.scale={x:(scaleRatio/5.6)/1.5, y:(scaleRatio/5.6)/1.5}
+
             elem.input.draggable = false;
             elem.position.x=0 + elem.width/2,
             elem.position.y=window.innerHeight - elem.height/2
@@ -263,6 +291,13 @@ var Game = {
         // elem.position.copyFrom(card_desc.position); 
         var tween3 = game.add.tween(elem.scale).to({
             x:(scaleRatio/5.6), y:(scaleRatio/5.6)
+        }, 200, Phaser.Easing.Bounce.InOut, true);
+
+        var tweent = game.add.tween(cardsArrText[elem.key].scale).to({
+            x:(scaleRatio), y:(scaleRatio)
+        }, 200, Phaser.Easing.Bounce.InOut, true);
+        var tweent = game.add.tween(cardsArrText2[elem.key].scale).to({
+            x:(scaleRatio), y:(scaleRatio)
         }, 200, Phaser.Easing.Bounce.InOut, true);
 
         visible = game.add.tween(elem.position).to({
@@ -336,6 +371,14 @@ var Game = {
         // game.world.bringToTop(cardsArrText[obj.key])
         // Phaser.Easing.Elastic.Out
         tween = Game.add.tween(obj.scale).to( { x:(scaleRatio+0.2)/5.6, y:(scaleRatio+0.2)/5.6 }, 100, Phaser.Easing.Linear.None, true);
+
+        var tweent = game.add.tween(cardsArrText[obj.key].scale).to({
+            x:(scaleRatio+0.2), y:(scaleRatio+0.2)
+        }, 100, Phaser.Easing.Bounce.InOut, true);
+        var tweent = game.add.tween(cardsArrText2[obj.key].scale).to({
+            x:(scaleRatio+0.2), y:(scaleRatio+0.2)
+        }, 100, Phaser.Easing.Bounce.InOut, true);
+
     },
     randomInteger: function (min, max) {
         var rand = min + Math.random() * (max + 1 - min);
@@ -349,6 +392,12 @@ var Game = {
             return;
         }
         tween = Game.add.tween(obj.scale).to( { x:(scaleRatio/5.6), y:(scaleRatio/5.6) }, 100, Phaser.Easing.Linear.None, true);
+        var tweent = game.add.tween(cardsArrText[obj.key].scale).to({
+            x:(scaleRatio), y:(scaleRatio)
+        }, 100, Phaser.Easing.Bounce.InOut, true);
+        var tweent = game.add.tween(cardsArrText2[obj.key].scale).to({
+            x:(scaleRatio), y:(scaleRatio)
+        }, 100, Phaser.Easing.Bounce.InOut, true);
 
         Card.remove(obj.key,gameMem.player.cards,gameMem.player.cardPlace)
 
@@ -400,6 +449,9 @@ var Game = {
     
         game.world.bringToTop(elem)
         enemy.visible=1
+        if(whose!='enemy'){ENEMYText[elem.key].visible=1;ENEMYText2[elem.key].visible=1;}
+        else{ENEMYText[enemy.key].visible=1;ENEMYText2[enemy.key].visible=1;}
+        
         visible = game.add.tween(elem).to({
             alpha:1
         }, 500, Phaser.Easing.Linear.None, true);
@@ -420,7 +472,7 @@ var Game = {
                 var tween3 = game.add.tween(elem.scale).to({
                  x:(scaleRatio/5.6), y:(scaleRatio/5.6)
                 }, 200, Phaser.Easing.Bounce.InOut, true);
-                clash.play();
+                // clash.play();
                 tween3.onComplete.add(function() {  
                     if(whose!='enemy'){quake2.visible = 1}
                     else{quake.visible = 1}                
